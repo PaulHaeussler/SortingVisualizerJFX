@@ -11,16 +11,19 @@ public class StepController {
     private ArrayList<Point> lastArray;
     private ArrayList<Point> currentArray;
 
+    public enum SortAlgos{
+        RadixLSD,
+        RadixMSD
+    }
+
     public StepController(){
 
     }
 
-    public void doNextStep(){
-        switch(lastStep + 1){
-            //Countingsort Dezimalstelle n
-            case 1:
+    public void doNextStep(SortAlgos type, boolean indicateSearch){
 
-        }
+
+
     }
 
 

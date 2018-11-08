@@ -4,16 +4,17 @@ import Calculations.RadixSort;
 import Calculations.RandomString;
 import UI.Chart;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -32,7 +33,7 @@ public class Main extends Application {
 
         RandomString rdmString = new RandomString(true,true,true);
         int listlength = 20;
-        int stringlength = 2;
+        int stringlength = 1;
         ArrayList<String> arr = rdmString.newStringList(listlength,stringlength);
         ArrayList<Pair> arrPair = new ArrayList<Pair>();
         for(String str:arr){
@@ -49,12 +50,22 @@ public class Main extends Application {
         chart.start(primaryStage);
         Chart chart2 = new Chart("RadixSort LSD sorted", "yLabel", "xLabel", sorted2, 400, 600, arrPair.get(5).getKey() + "");
         chart2.start(primaryStage);
-        vbox.getChildren().addAll(chart.getBarChart(), chart2.getBarChart());
+        Button btn = new Button("Next step");
+        vbox.getChildren().addAll(chart.getBarChart(), chart2.getBarChart(), btn);
         Scene scene = new Scene(vbox);
         primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
         primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        btn.setOnAction(actionEvent ->  {
+            chart.markUpKey(arrPair.get(9).getKey().toString());
+            chart2.markUpKey(arrPair.get(9).getKey().toString());
+
+        });
+
+
+
 
 
         long appFinish = System.currentTimeMillis() - appStart;

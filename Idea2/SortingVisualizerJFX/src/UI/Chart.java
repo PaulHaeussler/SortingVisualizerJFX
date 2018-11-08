@@ -66,27 +66,35 @@ public class Chart extends Application {
         scene.getStylesheets().add("style.css");
         //stage.show();
 
+        markUpKey(markUpStr);
+
+
+
+    }
+
+    public void markUpKey(String key){
         int c = 0;
         for(int i = 0; i < arr.size(); i++){
-            if(arr.get(i).getKey().toString().equals(markUpStr)){
+            if(arr.get(i).getKey().toString().equals(key)){
                 c = i;
                 break;
             }
         }
 
         int i = 0;
-        for(Node n:bc.lookupAll(".default-color0.chart-bar")){
-            System.out.println(n.idProperty());
-            if(c == i){
-                n.setStyle("-fx-bar-fill: Maroon;");
-            } else {
-                n.setStyle("-fx-bar-fill: Red;");
-            }
-            i++;
-        }
+            for(Node n:bc.lookupAll(".default-color0.chart-bar")){
 
+                if(c == i){
+                    n.setStyle("-fx-bar-fill: Maroon;");
+                } else {
+                    n.setStyle("-fx-bar-fill: Red;");
+                }
+                i++;
+            }
 
     }
+
+
 
     public BarChart<String, Number> getBarChart(){
         return this.bc;
