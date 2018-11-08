@@ -35,6 +35,12 @@ public class RandomString {
     public ArrayList<String> newStringList(int listlength, int stringlength){
         ArrayList<String> list = new ArrayList<>();
         for(int i = 0; i < listlength; i++){
+            if(stringlength == 4 && i == 5){
+                list.add("SooS");
+            }
+            else if(stringlength == 4 && i == 6){
+                list.add("MeeM");
+            }
             list.add(this.newString(stringlength));
         }
         return list;

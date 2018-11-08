@@ -1,5 +1,8 @@
 package Calculations;
 
+import javafx.util.Pair;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -54,16 +57,17 @@ public class RadixSort {
         return null;
     }
 
-    private static ArrayList<Long> countingSort(ArrayList<Long> listToSort, int charpos, long m){
+    private static ArrayList<Pair> countingSort(ArrayList<Pair> listToSort, int charpos, long m){
 
 
-        ArrayList<Long> result = new ArrayList<>();
+        ArrayList<Pair> result = new ArrayList<>();
 
         for(long i = 0; i < 10; i++)
         {
-            for(Long lng : listToSort)
+            for(Pair p : listToSort)
             {
-                String strlong = lng.toString();
+                String strlong = String.format("%0"+ m + "d",p.getValue());
+
                 String str = "";
                 int subStrSrt = strlong.length()-charpos;
                 int subStrEnd = subStrSrt + 1;
@@ -76,54 +80,33 @@ public class RadixSort {
                 }
                 if(str == "") str = "0";
                 if(Long.valueOf(str) == i){
-                    result.add(lng);
+                    result.add(p);
                 }
             }
         }
-
         return result;
     }
 
 
-    public static ArrayList<Long> radixSort(ArrayList<String> listToSort){
+    public static ArrayList<Pair> radixSort(ArrayList<Pair> listToSort){
 
-        ArrayList<Long> longArr = stringArrToLongArr(listToSort);
-        ArrayList<Long> longPreserve = longArr;
+        long m = getMax(listToSort);
 
-        long m = getMax(longArr);
-
-        for(int i = 1; i < m; i++) {
-            longArr = countingSort(longArr, i, m);
+        for(int i = 1; i <= m; i++) {
+            listToSort = countingSort(listToSort, i, m);
         }
-
-        ArrayList<String> result = new ArrayList<>();
-
-        for(int i = 0; i < longArr.size(); i++)
-        {
-            for(int j = 0; j < longPreserve.size(); j++)
-            {
-                if(longPreserve.get(j) == longArr.get(i)){
-                    result.add(listToSort.get(j));
-                }
-            }
-        }
-
-        System.out.println(result);
-
-
-        return longArr;
-
+        return listToSort;
     }
 
 
 
-    private static long getMax(ArrayList<Long> list){
+    private static long getMax(ArrayList<Pair> list){
 
         long m = 0;
 
         for(int i = 0; i < list.size(); i++){
-            long n = list.get(i);
-            if(n > m) m = list.indexOf(n);
+            long n = list.get(i).getValue().toString().length();
+            if(n > m) m = list.get(i).getValue().toString().length();
         }
 
         return m;
@@ -139,7 +122,7 @@ public class RadixSort {
     }
 
 
-    private static ArrayList<Long> stringArrToLongArr(ArrayList<String> list){
+    public static ArrayList<Long> stringArrToLongArr(ArrayList<String> list){
         ArrayList<Long> arr = new ArrayList<>();
         for(String str : list) {
             arr.add(stringToLong(str));
@@ -148,11 +131,11 @@ public class RadixSort {
     }
 
 
-    private static Long stringToLong(String str) {
+    public static Long stringToLong(String str) {
         String result = "";
         for(int i = 0; i < str.length(); i++){
             char c = str.charAt(i);
-            result += String.format("%02d",Character.getNumericValue(c));
+            result += String.format("%03d",(long)c);
         }
         Long lng = Long.parseLong(result);
         return lng;
