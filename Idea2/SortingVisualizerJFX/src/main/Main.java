@@ -3,10 +3,10 @@ package main;
 import Calculations.RadixSort;
 import Calculations.RandomString;
 import UI.Chart;
+import UI.Window;
+import UI.WindowController;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,10 +21,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../UI/Init.fxml"));
         primaryStage.setTitle("Hello World");
         //primaryStage.setScene(new Scene(root, 300, 275));
 
+        Window window = new Window();
+        window.initializeInit();
 
 
 
@@ -32,8 +34,8 @@ public class Main extends Application {
         long appStart = System.currentTimeMillis();
 
         RandomString rdmString = new RandomString(true,true,true);
-        int listlength = 20;
-        int stringlength = 1;
+        int listlength = 200;
+        int stringlength = 6;
         ArrayList<String> arr = rdmString.newStringList(listlength,stringlength);
         ArrayList<Pair> arrPair = new ArrayList<Pair>();
         for(String str:arr){
