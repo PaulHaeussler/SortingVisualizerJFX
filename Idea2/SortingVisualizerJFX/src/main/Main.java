@@ -4,7 +4,6 @@ import Calculations.RadixSort;
 import Calculations.RandomString;
 import UI.Chart;
 import UI.Window;
-import UI.WindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,13 +18,14 @@ import java.util.ArrayList;
 
 public class Main extends Application {
 
+    public static Window window = new Window();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../UI/Init.fxml"));
         primaryStage.setTitle("Hello World");
         //primaryStage.setScene(new Scene(root, 300, 275));
 
-        Window window = new Window();
         window.initializeInit();
 
 

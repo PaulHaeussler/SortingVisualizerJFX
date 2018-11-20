@@ -25,4 +25,20 @@ public class Window {
             e.printStackTrace();
         }
     }
+
+    public void initializeHelp() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Help.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Algorithmeninformation");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
