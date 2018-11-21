@@ -2,7 +2,10 @@ package main;
 
 import Calculations.RadixSort;
 import Calculations.RandomString;
+import Calculations.SortingEntry;
+import Calculations.StepController;
 import UI.Chart;
+import UI.VisualizationController;
 import UI.Window;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,18 +22,17 @@ import java.util.ArrayList;
 public class Main extends Application {
 
     public static Window window = new Window();
+    public static ArrayList<SortingEntry> input;
+    public static StepController.SortAlgos pickedAlgo;
+    public static VisualizationController visualizationController;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../UI/Init.fxml"));
-        primaryStage.setTitle("Hello World");
-        //primaryStage.setScene(new Scene(root, 300, 275));
-
         window.initializeInit();
 
 
 
-
+        /**
         long appStart = System.currentTimeMillis();
 
         RandomString rdmString = new RandomString(true,true,true, true);
@@ -72,6 +74,7 @@ public class Main extends Application {
 
         long appFinish = System.currentTimeMillis() - appStart;
         System.out.println("Finished sorting after " + appFinish + "ms, that's " + (float)(listlength * stringlength)/(float)appFinish + "ms per character!");
+         */
     }
 
 
@@ -87,7 +90,7 @@ public class Main extends Application {
         return result;
     }
 
-    public static void runCalculationWindow(){
-
+    public static void runVisualization(){
+        window.initializeVisualization();
     }
 }

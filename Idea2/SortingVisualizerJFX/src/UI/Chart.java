@@ -41,7 +41,7 @@ public class Chart extends Application {
     @Override public void start(Stage stage){
 
         stage.setTitle(title);
-        this.bc = new BarChart<String, Number>(xAxis, yAxis);
+        this.bc = new BarChart<>(xAxis, yAxis);
         bc.setTitle(title);
         yAxis.setLabel(yLabel);
         xAxis.setLabel(xLabel);
@@ -63,7 +63,6 @@ public class Chart extends Application {
 
 
         //stage.setScene(scene);
-        scene.getStylesheets().add("style.css");
         //stage.show();
 
         markUpKey(markUpStr);

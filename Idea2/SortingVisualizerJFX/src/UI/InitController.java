@@ -2,6 +2,7 @@ package UI;
 
 import Calculations.RandomString;
 import Calculations.SortingEntry;
+import Calculations.StepController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,13 +78,13 @@ public class InitController implements Initializable {
     }
 
     public void Bt_add_clicked() {
-        if(Tb_charInput.getCharacters().toString().trim().equals("")){
+        if(Tb_charInput.getText().trim().equals("")){
             Lb_error_empty_field.setVisible(true);
             return;
-        } else if(Tb_charInput.getCharacters().toString().length() < 1 || Tb_charInput.getCharacters().toString().length() > 6){
+        } else if(Tb_charInput.getText().length() < 1 || Tb_charInput.getText().length() > 6){
             Lb_error_str_length.setVisible(true);
             return;
-        } else if(!(Tb_position.getCharacters().toString().matches("[0-9]+") || Tb_position.getCharacters().toString().equals(""))){
+        } else if(!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7){
             Lb_error_wrong_pos.setVisible(true);
             return;
         } else if(Integer.valueOf(Tb_charInput.getText()) + Table.getItems().size() > 200){
@@ -101,21 +102,21 @@ public class InitController implements Initializable {
             });
             return;
         }
-        if(Tb_position.getCharacters().toString().trim().equals("")) {
+        if(Tb_position.getText().trim().equals("")) {
             if(Table.getItems().isEmpty()) {
-                addItemsToTable(Table, new SortingEntry(0, Tb_charInput.getCharacters().toString()));
+                addItemsToTable(Table, new SortingEntry(0, Tb_charInput.getText()));
                 return;
             }
-            addToMaxPosPlusOne(Tb_charInput.getCharacters().toString());
+            addToMaxPosPlusOne(Tb_charInput.getText());
         } else {
             for(Object o:Table.getItems()){
                 SortingEntry entry = (SortingEntry) o;
-                if(entry.getIndex() == Integer.parseInt(Tb_position.getCharacters().toString())){
+                if(entry.getIndex() == Integer.parseInt(Tb_position.getText())){
                     Lb_error_pos_occupied.setVisible(true);
                     return;
                 }
             }
-            addItemsToTable(Table, new SortingEntry(Integer.parseInt(Tb_position.getCharacters().toString()), Tb_charInput.getCharacters().toString()));
+            addItemsToTable(Table, new SortingEntry(Integer.parseInt(Tb_position.getText()), Tb_charInput.getText()));
         }
 
     }
@@ -158,6 +159,8 @@ public class InitController implements Initializable {
             Lb_error_symbols.setVisible(true);
         } else if(Tb_entryCount.getText().equals("")){
             Lb_error_count.setVisible(true);
+        } else if(Tb_entryCount.getText().length() > 7) {
+            Lb_error_count_out_of_bounds.setVisible(true);
         } else if(!(Tb_entryCount.getText().matches("[0-9]+")) || Integer.valueOf(Tb_entryCount.getText()) < 1 || Integer.valueOf(Tb_entryCount.getText()) > 200){
             Lb_error_count_out_of_bounds.setVisible(true);
         } else if(Integer.valueOf(Tb_entryCount.getText()) + Table.getItems().size() > 200){
@@ -183,16 +186,29 @@ public class InitController implements Initializable {
             Lb_error_no_entries.setVisible(true);
             return;
         }
-        Main.runCalculationWindow();
+        ArrayList<SortingEntry> input = new ArrayList<>();
+        for(Object o:Table.getItems()){
+            SortingEntry entry = (SortingEntry) o;
+            input.add(entry);
+        }
+        Main.input = input;
+        if(Rb_LSD.isSelected()){
+            Main.pickedAlgo = StepController.SortAlgos.RadixLSD;
+        } else {
+            Main.pickedAlgo = StepController.SortAlgos.RadixMSD;
+        }
+        Main.runVisualization();
     }
 
 
     public void Bt_remove_clicked() {
-
-        for(Object o:Table.getSelectionModel().getSelectedItems()){
+        ObservableList list = Table.getSelectionModel().getSelectedItems();
+        Object[] arr = list.toArray();
+        for(Object o:arr){
             SortingEntry selectedItem = (SortingEntry) o;
             Table.getItems().remove(selectedItem);
         }
+        Table.refresh();
     }
 
     public void Rb_LSD_clicked() {

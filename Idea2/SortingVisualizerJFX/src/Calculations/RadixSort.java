@@ -88,25 +88,14 @@ public class RadixSort {
     }
 
 
-    public static ArrayList<Pair> radixSort(ArrayList<Pair> listToSort){
 
-        long m = getMax(listToSort);
+    public static int getMax(ArrayList<SortingEntry> list){
 
-        for(int i = 1; i <= m; i++) {
-            listToSort = countingSort(listToSort, i, m);
-        }
-        return listToSort;
-    }
-
-
-
-    private static long getMax(ArrayList<Pair> list){
-
-        long m = 0;
+        int m = 0;
 
         for(int i = 0; i < list.size(); i++){
-            long n = list.get(i).getValue().toString().length();
-            if(n > m) m = list.get(i).getValue().toString().length();
+            int n = list.get(i).getValAsLong().toString().length();
+            if(n > m) m = list.get(i).getValAsLong().toString().length();
         }
 
         return m;
@@ -121,23 +110,4 @@ public class RadixSort {
         return intArr;
     }
 
-
-    public static ArrayList<Long> stringArrToLongArr(ArrayList<String> list){
-        ArrayList<Long> arr = new ArrayList<>();
-        for(String str : list) {
-            arr.add(stringToLong(str));
-        }
-        return arr;
-    }
-
-
-    public static Long stringToLong(String str) {
-        String result = "";
-        for(int i = 0; i < str.length(); i++){
-            char c = str.charAt(i);
-            result += String.format("%03d",(long)c);
-        }
-        Long lng = Long.parseLong(result);
-        return lng;
-    }
 }
