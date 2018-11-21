@@ -33,7 +33,7 @@ public class Main extends Application {
 
         long appStart = System.currentTimeMillis();
 
-        RandomString rdmString = new RandomString(true,true,true);
+        RandomString rdmString = new RandomString(true,true,true, true);
         int listlength = 200;
         int stringlength = 6;
         ArrayList<String> arr = rdmString.newStringList(listlength,stringlength);
@@ -85,5 +85,9 @@ public class Main extends Application {
             result.add(l.toString());
         }
         return result;
+    }
+
+    public static void runCalculationWindow(){
+
     }
 }

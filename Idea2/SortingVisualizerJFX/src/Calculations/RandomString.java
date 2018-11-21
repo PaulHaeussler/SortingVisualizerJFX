@@ -7,19 +7,21 @@ import java.util.Random;
 public class RandomString {
 
 
-    private static final String upper = "ABCDEFGHIJLMNOPQRSTUVWXYZ";
+    private static final String upper = "ABCDEFGHIJLMNOPQRSTUVWXYZÄÖÜ";
     private static final String lower = upper.toLowerCase(Locale.ROOT);
     private static final String digits = "1234567890";
+    private static final String specChars = "!§$%&/()=?`´^°²³{[]}ß@*+'#-_.:,;~|<>";
     private Random random;
     private char[] symbols;
 
 
-    public RandomString(boolean useUpper, boolean useLower, boolean useDigits){
+    public RandomString(boolean useUpper, boolean useLower, boolean useDigits, boolean useSpecChars){
         random = new Random();
         String selected = "";
         if(useUpper) selected += upper;
         if(useLower) selected += lower;
         if(useDigits) selected += digits;
+        if(useSpecChars) selected += specChars;
         symbols = selected.toCharArray();
     }
 
