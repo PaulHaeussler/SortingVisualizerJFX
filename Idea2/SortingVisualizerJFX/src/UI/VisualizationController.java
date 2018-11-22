@@ -88,14 +88,16 @@ public class VisualizationController implements Initializable {
             for(SortingEntry entry:entries){
                 inputSeries.getData().add(new XYChart.Data(entry.getValue(),entry.getValAsLong()));
             }
-            input.getData().removeAll();
+            input.getData().clear();
+            input.layout();
             input.getData().add(inputSeries);
         } else {
             resultSeries = new XYChart.Series();
             for(SortingEntry entry:entries){
                 resultSeries.getData().add(new XYChart.Data(entry.getValue(), entry.getValAsLong()));
             }
-            result.getData().removeAll();
+            result.getData().clear();
+            result.layout();
             result.getData().add(resultSeries);
         }
     }
@@ -105,8 +107,9 @@ public class VisualizationController implements Initializable {
         while(!stepController.isFinished()){
             stepController.doNextStep();
             for(SortingEntry entry: stepController.getCurrentResults()){
-                System.out.println(entry.getIndex() + "-" + entry.getValue() + "-" + entry.getValAsLong());
+                //System.out.println(entry.getIndex() + "-" + entry.getValue() + "-" + entry.getValAsLong());
             }
         }
+        System.out.println("Anzahl Steps: " + StepController.totalSteps);
     }
 }

@@ -18,6 +18,7 @@ public class StepController {
     private SortAlgos type;
     public int maxLength;
 
+    public static int totalSteps = 0;
 
     public enum SortAlgos{
         RadixLSD,
@@ -25,6 +26,7 @@ public class StepController {
     }
 
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
+
         type = algoType;
         initList = list;
         maxLength = RadixSort.getMax(list);
@@ -32,7 +34,7 @@ public class StepController {
         countSortCurrElement = 0;
         initList = list;
         input = list;
-        currentResults = new ArrayList<SortingEntry>();
+        currentResults = new ArrayList<>();
         if(type == SortAlgos.RadixLSD){
             countSortCurrPosition = 0;
         } else {
@@ -43,6 +45,7 @@ public class StepController {
     }
 
     public void doNextStep(){
+        totalSteps++;
         if(isFinished) return;
         currentResults = steps.performCountSortStep(input, currentResults, countSortCurrNumber, countSortCurrElement, countSortCurrPosition);
         if(steps.checkIfCSIsFinished(input, currentResults)){
