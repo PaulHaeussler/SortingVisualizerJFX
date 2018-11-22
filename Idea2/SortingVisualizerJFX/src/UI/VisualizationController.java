@@ -44,14 +44,14 @@ public class VisualizationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle ressources){
 
-        input.setTitle("Schieb ihn rein");
-        result.setTitle("Fat cocks are fat");
-        input.setLegendVisible(true);
-        result.setLegendVisible(true);
-        input.setAnimated(true);
-        result.setAnimated(true);
-        updateChart(false, Main.input);
-        updateChart(true, Steps.fillListwithEmpties(new ArrayList<>(), Main.input.size()));
+        input.setTitle("Input");
+        result.setTitle("Zwischenergebnis");
+        input.setLegendVisible(false);
+        result.setLegendVisible(false);
+        input.setAnimated(false);
+        result.setAnimated(false);
+        updateChart(true, Main.input);
+        updateChart(false, Steps.fillListwithEmpties(new ArrayList<>(), Main.input.size()));
 
     }
 
@@ -85,7 +85,7 @@ public class VisualizationController implements Initializable {
                 if(originalChart){
                     bc = input;
                 } else {
-                    bc = input;
+                    bc = result;
                 }
 
                 int c = 0;
@@ -143,6 +143,7 @@ public class VisualizationController implements Initializable {
     public void nextStepClicked(){
 
         stepController.doNextStep();
+        System.out.println("Anzahl Steps: " + StepController.totalSteps);
     }
 
 

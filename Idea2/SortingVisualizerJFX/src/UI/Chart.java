@@ -32,9 +32,8 @@ public class Chart extends Application {
         this.xLabel = xLabel;
         this.arr = arr;
         this.xAxis = new CategoryAxis();
-        this.xAxis.setStartMargin(10);
         this.yAxis = new NumberAxis();
-        this.width = width * 2;
+        this.width = width;
         this.height = height;
         this.markUpStr = markUpStr;
     }

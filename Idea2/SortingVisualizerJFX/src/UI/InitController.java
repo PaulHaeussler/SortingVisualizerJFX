@@ -84,7 +84,7 @@ public class InitController implements Initializable {
         } else if(Tb_charInput.getText().length() < 1 || Tb_charInput.getText().length() > 6){
             Lb_error_str_length.setVisible(true);
             return;
-        } else if(!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7){
+        } else if(!(Tb_position.getText().equals("")) && (!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7)){
             Lb_error_wrong_pos.setVisible(true);
             return;
         } else if(Table.getItems().size()+1 > 200){
