@@ -151,7 +151,7 @@ public class InitController implements Initializable {
 
             col.setCellValueFactory(new PropertyValueFactory<>(field));
         }
-        table.getItems().add(entry + "GAY");
+        table.getItems().add(entry);
     }
 
     public void Bt_generate_clicked() {
@@ -172,7 +172,7 @@ public class InitController implements Initializable {
 
     private void generateRandomEntries(int entryCount, int strLength){
         RandomString rnd = new RandomString(Cb_upper.isSelected(), Cb_lower.isSelected(), Cb_digits.isSelected(), Cb_specChar.isSelected());
-        for(int i = 0; i < entryCount * 10; i++){
+        for(int i = 0; i < entryCount; i++){
             addToMaxPosPlusOne(rnd.newString(strLength));
         }
     }

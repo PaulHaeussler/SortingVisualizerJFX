@@ -33,7 +33,7 @@ public class Chart extends Application {
         this.arr = arr;
         this.xAxis = new CategoryAxis();
         this.yAxis = new NumberAxis();
-        this.width = width;
+        this.width = width * 2;
         this.height = height;
         this.markUpStr = markUpStr;
     }

@@ -82,6 +82,7 @@ public class RadixSort {
                 if(Long.valueOf(str) == i){
                     result.add(p);
                 }
+                result = listToSort;
             }
         }
         return result;
