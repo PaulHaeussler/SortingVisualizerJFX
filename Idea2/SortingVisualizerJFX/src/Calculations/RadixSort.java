@@ -66,7 +66,7 @@ public class RadixSort {
         {
             for(Pair p : listToSort)
             {
-                String strlong = String.format("%0"+ m + "d",p.getValue());
+                String strlong = String.format("%0"+ m + "3d",p.getValue());
 
                 String str = "";
                 int subStrSrt = strlong.length()-charpos;
@@ -82,8 +82,8 @@ public class RadixSort {
                 if(Long.valueOf(str) == i){
                     result.add(p);
                 }
-                result = listToSort;
             }
+            result = listToSort;
         }
         return result;
     }
