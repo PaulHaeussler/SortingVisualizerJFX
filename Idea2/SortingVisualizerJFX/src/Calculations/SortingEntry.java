@@ -27,11 +27,11 @@ public class SortingEntry {
     }
 
     public Integer getIndex(){
-        return index;
+        return new Integer(value);
     }
 
     public String getValue(){
-        return value;
+        return new Integer(index).toString();
     }
 
     public Long getValAsLong() {return valAsLong;}

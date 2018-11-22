@@ -97,12 +97,12 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Lb_error_wrong_pos" layoutX="186.0" layoutY="512.0" prefHeight="17.0" prefWidth="193.0" text="Unzulässige Zeichen!" textFill="#da0000" visible="false">
+                  <Label fx:id="Lb_error_wrong_pos" layoutX="186.0" layoutY="599.0" prefHeight="17.0" prefWidth="193.0" text="Unzulässige Zeichen!" textFill="#da0000" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Lb_error_exceed" layoutX="166.0" layoutY="689.0" prefHeight="27.0" prefWidth="655.0" text="Maximal zulässige Anzahl an Einträgen (200) würde überschritten werden!" textFill="#bf0000" visible="false">
+                  <Label fx:id="Lb_error_exceed" layoutX="166.0" layoutY="199.0" prefHeight="27.0" prefWidth="655.0" text="Maximal zulässige Anzahl an Einträgen (200) würde überschritten werden!" textFill="#bf0000" visible="false">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

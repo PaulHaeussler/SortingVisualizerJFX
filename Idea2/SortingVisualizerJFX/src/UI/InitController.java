@@ -78,9 +78,6 @@ public class InitController implements Initializable {
     }
 
     public void Bt_add_clicked() {
-        if(1 == 1) {
-            return;
-        }
         if(Tb_charInput.getText().trim().equals("")){
             Lb_error_empty_field.setVisible(true);
             return;
@@ -90,7 +87,7 @@ public class InitController implements Initializable {
         } else if(!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7){
             Lb_error_wrong_pos.setVisible(true);
             return;
-        } else if(Integer.valueOf(Tb_charInput.getText()) + Table.getItems().size() > 200){
+        } else if(Table.getItems().size()+1 > 200){
             Lb_error_exceed.setVisible(true);
             return;
         } else if(Tb_charInput.getText().contains("€")){
