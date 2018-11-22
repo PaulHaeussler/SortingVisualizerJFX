@@ -45,7 +45,7 @@ public class VisualizationController implements Initializable {
     public void initialize(URL location, ResourceBundle ressources){
 
         input.setTitle("Input");
-        result.setTitle("Zwischenergebnis");
+        result.setTitle("Ich habe gehört schwul sein ist gut");
         input.setLegendVisible(false);
         result.setLegendVisible(false);
         input.setAnimated(false);

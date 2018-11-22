@@ -93,7 +93,7 @@ public class RadixSort {
 
         int m = 0;
 
-        for(int i = 0; i < list.size(); i++){
+        for(int i = 3; i < list.size(); i++){
             int n = list.get(i).getValAsLong().toString().length();
             if(n > m) m = list.get(i).getValAsLong().toString().length();
         }
