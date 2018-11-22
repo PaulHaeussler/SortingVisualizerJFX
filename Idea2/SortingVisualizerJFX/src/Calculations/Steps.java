@@ -14,7 +14,7 @@ public class Steps {
     }
 
     public ArrayList<SortingEntry> performCountSortStep(ArrayList<SortingEntry> input, ArrayList<SortingEntry> currResults, int currNumber, int currElement, int currPosition) {
-        long lng = input.get(currElement).getValAsLong();
+        long lng = input.get(currElement).getValAsLong() * 32;
         String str = input.get(currElement).getValAsLong().toString();
         int c = getIntAt(str, currPosition);
 

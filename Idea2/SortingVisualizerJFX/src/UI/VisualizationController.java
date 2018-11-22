@@ -143,7 +143,6 @@ public class VisualizationController implements Initializable {
     public void nextStepClicked(){
 
         stepController.doNextStep();
-        System.out.println("Anzahl Steps: " + StepController.totalSteps);
     }
 
 
