@@ -1,8 +1,8 @@
 package Calculations;
 
+import UI.VisualizationController;
 import main.Main;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class StepController {
@@ -14,11 +14,12 @@ public class StepController {
     private ArrayList<SortingEntry> currentResults;
     private ArrayList<SortingEntry> input;
     private ArrayList<SortingEntry> initList;
-    private Steps steps = new Steps();
+    private Steps steps;
     private SortAlgos type;
     public int maxLength;
 
     public static int totalSteps = 0;
+    public long startTime = 0;
 
     public enum SortAlgos{
         RadixLSD,
@@ -28,6 +29,7 @@ public class StepController {
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
 
         type = algoType;
+        steps = new Steps(type);
         initList = list;
         maxLength = RadixSort.getMax(list);
         countSortCurrNumber = 0;
@@ -38,14 +40,18 @@ public class StepController {
         if(type == SortAlgos.RadixLSD){
             countSortCurrPosition = 0;
         } else {
-            countSortCurrPosition = maxLength;
+            countSortCurrPosition = maxLength-1;
         }
-        doNextStep();
+        //doNextStep();
 
     }
 
     public void doNextStep(){
+        if(startTime == 0){
+            startTime = System.nanoTime();
+        }
         totalSteps++;
+        Main.visualizationController.updateStatus();
         if(isFinished) return;
         currentResults = steps.performCountSortStep(input, currentResults, countSortCurrNumber, countSortCurrElement, countSortCurrPosition);
         if(steps.checkIfCSIsFinished(input, currentResults)){
@@ -77,7 +83,7 @@ public class StepController {
         if(countSortCurrNumber>9) countSortCurrNumber = 0;
     }
 
-    public boolean isFinished(){
+    public boolean isItFinished(){
         return isFinished;
     }
 
@@ -87,6 +93,18 @@ public class StepController {
 
     public ArrayList<SortingEntry> getInput() {
         return input;
+    }
+
+    public int getCurrElement(){
+        return countSortCurrElement;
+    }
+
+    public int getCountSortCurrNumber(){
+        return countSortCurrNumber;
+    }
+
+    public int getCountSortCurrPosition(){
+        return countSortCurrPosition;
     }
 }
 

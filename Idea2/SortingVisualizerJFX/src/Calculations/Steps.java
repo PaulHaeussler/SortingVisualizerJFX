@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 public class Steps {
 
+    private StepController.SortAlgos type;
+
+    public Steps(StepController.SortAlgos algorithm){
+        type = algorithm;
+    }
+
     public ArrayList<SortingEntry> performCountSortStep(ArrayList<SortingEntry> input, ArrayList<SortingEntry> currResults, int currNumber, int currElement, int currPosition) {
         long lng = input.get(currElement).getValAsLong();
         String str = input.get(currElement).getValAsLong().toString();
