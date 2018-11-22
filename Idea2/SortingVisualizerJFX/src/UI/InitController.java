@@ -78,6 +78,9 @@ public class InitController implements Initializable {
     }
 
     public void Bt_add_clicked() {
+        if(1 == 1) {
+            return;
+        }
         if(Tb_charInput.getText().trim().equals("")){
             Lb_error_empty_field.setVisible(true);
             return;

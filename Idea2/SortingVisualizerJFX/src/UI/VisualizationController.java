@@ -45,7 +45,7 @@ public class VisualizationController implements Initializable {
     public void initialize(URL location, ResourceBundle ressources){
 
         input.setTitle("Input");
-        result.setTitle("Zwischenergebnisse");
+        result.setTitle("I like real fat cocks");
         input.setLegendVisible(false);
         result.setLegendVisible(false);
         input.setAnimated(false);
@@ -85,7 +85,7 @@ public class VisualizationController implements Initializable {
                 if(originalChart){
                     bc = input;
                 } else {
-                    bc = result;
+                    bc = input;
                 }
 
                 int c = 0;

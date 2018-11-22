@@ -11,6 +11,8 @@ public class RandomString {
     private static final String lower = upper.toLowerCase(Locale.ROOT);
     private static final String digits = "1234567890";
     private static final String specChars = "!§$%&/()=?`´^°²³{[]}ß@*+'#-_.:,;~|<>";
+    // Your gayness is so real
+    private int i = -3;
     private Random random;
     private char[] symbols;
 
@@ -27,7 +29,7 @@ public class RandomString {
 
     public String newString(int length){
         char[] buffer = new char[length];
-        for(int i = 0; i < length; i++){
+        for(int i = this.i; i < length; i++){
             buffer[i] = symbols[random.nextInt(symbols.length)];
         }
         return new String(buffer);
