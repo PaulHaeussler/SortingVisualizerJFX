@@ -1,6 +1,5 @@
 package Calculations;
 
-import UI.VisualizationController;
 import main.Main;
 
 import java.util.ArrayList;

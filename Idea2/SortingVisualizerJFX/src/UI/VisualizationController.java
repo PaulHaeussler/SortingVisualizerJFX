@@ -162,7 +162,7 @@ public class VisualizationController implements Initializable {
             }
         });
         thread.start();
-        System.out.println("Laufzeit: " + (System.nanoTime() - stepController.startTime)/(long)1000/(long)1000/(long)100 + " Sekunden");
+        System.out.println("Laufzeit: " + (System.nanoTime() - stepController.startTime)/(long)1000/(long)1000/(long)1000 + " Sekunden");
         for(SortingEntry entry: stepController.getCurrentResults()){
             System.out.println(entry.getIndex() + "-" + entry.getValue() + "-" + entry.getValAsLong());
         }
