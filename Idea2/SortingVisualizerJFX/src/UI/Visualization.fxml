@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.VisualizationController">
+<VBox fx:id="vbox_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.VisualizationController">
    <children>
-      <BarChart fx:id="input" prefHeight="130.0" prefWidth="580.0">
+      <BarChart fx:id="input" prefHeight="130.0" prefWidth="580.0" VBox.vgrow="ALWAYS">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -18,7 +18,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <BarChart fx:id="result" prefHeight="114.0" prefWidth="580.0">
+      <BarChart fx:id="result" prefHeight="114.0" prefWidth="580.0" VBox.vgrow="ALWAYS">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -26,48 +26,59 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <HBox prefHeight="135.0" prefWidth="739.0">
+      <HBox fx:id="hbox_lower" prefHeight="135.0" prefWidth="739.0">
          <children>
-            <VBox prefHeight="100.0" prefWidth="397.0">
+            <VBox fx:id="vbox_expl" prefHeight="100.0" prefWidth="397.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="Erklärung:" />
-                  <TextArea fx:id="explanation" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="explanation" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" right="10.0" top="10.0" />
+                     </VBox.margin></TextArea>
                </children>
             </VBox>
-            <Button fx:id="nextStep" mnemonicParsing="false" onMouseClicked="#nextStepClicked" prefHeight="114.0" prefWidth="68.0" text="Next Step">
-               <HBox.margin>
-                  <Insets left="20.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="autorun" mnemonicParsing="false" onMouseClicked="#autorunClicked" prefHeight="114.0" prefWidth="61.0" text="Autorun">
-               <HBox.margin>
-                  <Insets left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </Button>
-            <VBox prefHeight="100.0" prefWidth="143.0">
+            <VBox fx:id="vbox_next" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox prefHeight="36.0" prefWidth="143.0">
+                  <Button fx:id="nextStep" mnemonicParsing="false" onMouseClicked="#nextStepClicked" prefHeight="114.0" prefWidth="68.0" text="Next Step" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox fx:id="vbox_auto" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="autorun" mnemonicParsing="false" onMouseClicked="#autorunClicked" prefHeight="114.0" prefWidth="61.0" text="Autorun" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox fx:id="vbox_stats" prefHeight="100.0" prefWidth="143.0">
+               <children>
+                  <HBox fx:id="hbox_pos" prefHeight="36.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label text="Current Position: " />
-                        <Label fx:id="Lb_currPos"/>
+                        <Label fx:id="Lb_currPos" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="32.0" prefWidth="143.0">
+                  <HBox fx:id="hbox_num" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label text="Current Number: " />
-                        <Label fx:id="Lb_currNumber"/>
+                        <Label fx:id="Lb_currNumber" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="32.0" prefWidth="143.0">
+                  <HBox fx:id="hbox_elem" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label text="Current Element: " />
-                        <Label fx:id="Lb_currElement"/>
+                        <Label fx:id="Lb_currElement" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="32.0" prefWidth="143.0">
+                  <HBox fx:id="hbox_step" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label text="Step Count: " />
-                        <Label fx:id="Lb_steps"/>
+                        <Label fx:id="Lb_steps" />
                      </children>
                   </HBox>
                </children>

@@ -4,11 +4,11 @@ import main.Main;
 
 import java.util.ArrayList;
 
-public class Steps {
+public class RadixSteps {
 
     private StepController.SortAlgos type;
 
-    public Steps(StepController.SortAlgos algorithm){
+    public RadixSteps(StepController.SortAlgos algorithm){
         type = algorithm;
     }
 

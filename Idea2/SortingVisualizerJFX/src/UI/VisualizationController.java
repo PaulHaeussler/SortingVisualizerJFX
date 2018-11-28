@@ -2,7 +2,7 @@ package UI;
 
 import Calculations.SortingEntry;
 import Calculations.StepController;
-import Calculations.Steps;
+import Calculations.RadixSteps;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +14,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import main.Main;
 
 import java.net.URL;
@@ -22,6 +24,14 @@ import java.util.ResourceBundle;
 
 public class VisualizationController implements Initializable {
 
+    @FXML public VBox vbox_main;
+    @FXML public HBox hbox_lower;
+    @FXML public VBox vbox_expl;
+    @FXML public VBox vbox_stats;
+    @FXML public HBox hbox_pos;
+    @FXML public HBox hbox_num;
+    @FXML public HBox hbox_elem;
+    @FXML public HBox hbox_step;
     @FXML public BarChart input;
     @FXML public BarChart result;
     @FXML public TextArea explanation;
@@ -43,7 +53,9 @@ public class VisualizationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle ressources){
-
+        vbox_main.setFillWidth(true);
+        hbox_lower.setFillHeight(true);
+        //vbox_main.getChildren().remove(input);
         input.setTitle("Input");
         result.setTitle("Zwischenergebnis");
         input.setLegendVisible(false);
@@ -51,89 +63,76 @@ public class VisualizationController implements Initializable {
         input.setAnimated(false);
         result.setAnimated(false);
         updateChart(true, Main.input);
-        updateChart(false, Steps.fillListwithEmpties(new ArrayList<>(), Main.input.size()));
+        updateChart(false, RadixSteps.fillListwithEmpties(new ArrayList<>(), Main.input.size()));
 
     }
 
     public void updateStatus(){
-        Platform.runLater(new Runnable(){
-            public void run(){
-                Lb_currElement.setText(stepController.getCurrElement()+"");
-                Lb_currNumber.setText(stepController.getCountSortCurrNumber()+"");
-                Lb_currPos.setText(stepController.getCountSortCurrPosition()+"");
-                Lb_steps.setText(StepController.totalSteps+"");
-            }
+        Platform.runLater(() -> {
+            Lb_currElement.setText(stepController.getCurrElement()+"");
+            Lb_currNumber.setText(stepController.getCountSortCurrNumber()+"");
+            Lb_currPos.setText(stepController.getCountSortCurrPosition()+"");
+            Lb_steps.setText(StepController.totalSteps+"");
         });
     }
 
 
     public void setNewExplanation(String str){
-        Platform.runLater(new Runnable(){
-            public void run(){
-                explanation.setWrapText(true);
-                explanation.setText(str);
-            }
+        Platform.runLater(() -> {
+            explanation.setWrapText(true);
+            explanation.setText(str);
         });
     }
 
     public void markNewElement(boolean originalChart, SortingEntry element, ArrayList<SortingEntry> inputArr){
-        Platform.runLater(new Runnable(){
-            @Override
-            public void run() {
-                BarChart bc;
-                ArrayList<SortingEntry> arr = inputArr;
-                if(originalChart){
-                    bc = input;
-                } else {
-                    bc = result;
-                }
+        Platform.runLater(() -> {
+            BarChart bc;
+            ArrayList<SortingEntry> arr = inputArr;
+            if(originalChart){
+                bc = input;
+            } else {
+                bc = result;
+            }
 
-                int c = 0;
-                for (int i = 0; i < arr.size(); i++) {
-                    if (arr.get(i).equals(element)) {
-                        c = i;
-                        break;
-                    }
-                }
-
-                int i = 0;
-                for (Node n : bc.lookupAll(".default-color0.chart-bar")) {
-
-                    if (c == i) {
-                        n.setStyle("-fx-bar-fill: Maroon;");
-                    } else {
-                        n.setStyle("-fx-bar-fill: Red;");
-                    }
-                    i++;
+            int c = 0;
+            for (int i = 0; i < arr.size(); i++) {
+                if (arr.get(i).equals(element)) {
+                    c = i;
+                    break;
                 }
             }
+
+            int i = 0;
+            for (Node n : bc.lookupAll(".default-color0.chart-bar")) {
+
+                if (c == i) {
+                    n.setStyle("-fx-bar-fill: Maroon;");
+                } else {
+                    n.setStyle("-fx-bar-fill: Red;");
+                }
+                i++;
+            }
         });
-
-
-
     }
 
     public void updateChart(boolean originalChart, ArrayList<SortingEntry> entries){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run(){
-                if(originalChart){
-                    inputSeries = new XYChart.Series();
-                    for(SortingEntry entry:entries){
-                        inputSeries.getData().add(new XYChart.Data(entry.getValue(),entry.getValAsLong()));
-                    }
-                    input.getData().clear();
-                    input.layout();
-                    input.getData().add(inputSeries);
-                } else {
-                    resultSeries = new XYChart.Series();
-                    for(SortingEntry entry:entries){
-                        resultSeries.getData().add(new XYChart.Data(entry.getValue(), entry.getValAsLong()));
-                    }
-                    result.getData().clear();
-                    result.layout();
-                    result.getData().add(resultSeries);
+        Platform.runLater(() -> {
+            if(originalChart){
+                inputSeries = new XYChart.Series();
+                for(SortingEntry entry:entries){
+                    inputSeries.getData().add(new XYChart.Data(entry.getValue(),entry.getValAsLong()));
                 }
+                input.getData().clear();
+                input.layout();
+                input.getData().add(inputSeries);
+            } else {
+                resultSeries = new XYChart.Series();
+                for(SortingEntry entry:entries){
+                    resultSeries.getData().add(new XYChart.Data(entry.getValue(), entry.getValAsLong()));
+                }
+                result.getData().clear();
+                result.layout();
+                result.getData().add(resultSeries);
             }
         });
 

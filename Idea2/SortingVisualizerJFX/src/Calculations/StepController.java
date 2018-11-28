@@ -13,7 +13,7 @@ public class StepController {
     private ArrayList<SortingEntry> currentResults;
     private ArrayList<SortingEntry> input;
     private ArrayList<SortingEntry> initList;
-    private Steps steps;
+    private RadixSteps steps;
     private SortAlgos type;
     public int maxLength;
 
@@ -28,7 +28,7 @@ public class StepController {
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
 
         type = algoType;
-        steps = new Steps(type);
+        steps = new RadixSteps(type);
         initList = list;
         maxLength = RadixSort.getMax(list);
         countSortCurrNumber = 0;

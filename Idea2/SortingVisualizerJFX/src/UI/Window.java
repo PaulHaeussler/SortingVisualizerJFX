@@ -50,6 +50,7 @@ public class Window {
             Parent root = loader.load();
             Main.visualizationController = loader.getController();
             Main.visualizationController.stepController = new StepController(Main.pickedAlgo, Main.input);
+            Main.visualizationRoot = root;
             Stage stage = new Stage();
             stage.setTitle("Sorting Visualizer");
             stage.setScene(new Scene(root));
