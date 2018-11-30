@@ -35,4 +35,6 @@ public class SortingEntry {
     }
 
     public Long getValAsLong() {return valAsLong;}
+
+    public void setValue(String val){value = val;}
 }

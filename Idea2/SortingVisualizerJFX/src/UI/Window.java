@@ -10,11 +10,13 @@ import main.Main;
 public class Window {
 
     public Stage InitStage;
+    public Stage VisualizationStage;
 
     public void initializeInit() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Init.fxml"));
             Parent root = loader.load();
+            Main.initController = loader.getController();
             InitStage = new Stage();
             InitStage.setTitle("SortingVisualizer");
             InitStage.setScene(new Scene(root));
@@ -49,12 +51,12 @@ public class Window {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Visualization.fxml"));
             Parent root = loader.load();
             Main.visualizationController = loader.getController();
-            Main.visualizationController.stepController = new StepController(Main.pickedAlgo, Main.input);
+            Main.stepController = new StepController(Main.pickedAlgo, Main.input);
             Main.visualizationRoot = root;
-            Stage stage = new Stage();
-            stage.setTitle("Sorting Visualizer");
-            stage.setScene(new Scene(root));
-            stage.show();
+            VisualizationStage = new Stage();
+            VisualizationStage.setTitle("Sorting Visualizer");
+            VisualizationStage.setScene(new Scene(root));
+            VisualizationStage.show();
 
 
 

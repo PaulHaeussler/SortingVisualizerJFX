@@ -1,5 +1,6 @@
 package Calculations;
 
+import javafx.application.Platform;
 import main.Main;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class StepController {
     private ArrayList<SortingEntry> currentResults;
     private ArrayList<SortingEntry> input;
     private ArrayList<SortingEntry> initList;
-    private RadixSteps steps;
+    private RadixSteps radixSteps;
     private SortAlgos type;
     public int maxLength;
 
@@ -28,9 +29,9 @@ public class StepController {
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
 
         type = algoType;
-        steps = new RadixSteps(type);
+        radixSteps = new RadixSteps(type);
         initList = list;
-        maxLength = RadixSort.getMax(list);
+        maxLength = Functions.getMax(list);
         countSortCurrNumber = 0;
         countSortCurrElement = 0;
         initList = list;
@@ -41,19 +42,39 @@ public class StepController {
         } else {
             countSortCurrPosition = maxLength-1;
         }
-        //doNextStep();
+        //doNextRadixStep();
 
     }
 
     public void doNextStep(){
+        switch (type){
+            case RadixLSD:
+                doNextRadixStep();
+                break;
+        }
+    }
+
+
+
+    /**
+     * Step control overhead if RadixSort was picked. Contains the possibility of implementing RadixSortMSD.
+     */
+
+    public void doNextRadixStep(){
         if(startTime == 0){
             startTime = System.nanoTime();
         }
+
+        if(isFinished) return;
+
         totalSteps++;
         Main.visualizationController.updateStatus();
-        if(isFinished) return;
-        currentResults = steps.performCountSortStep(input, currentResults, countSortCurrNumber, countSortCurrElement, countSortCurrPosition);
-        if(steps.checkIfCSIsFinished(input, currentResults)){
+
+
+        currentResults = radixSteps.performCountSortStep(input, currentResults, countSortCurrNumber, countSortCurrElement, countSortCurrPosition);
+
+
+        if(radixSteps.checkIfCSIsFinished(input, currentResults)){
             if(type == SortAlgos.RadixLSD){
                 countSortCurrPosition++;
             } else {
@@ -61,8 +82,12 @@ public class StepController {
             }
             if(countSortCurrPosition < 0 || countSortCurrPosition > maxLength){
                 isFinished = true;
+                System.out.println("Laufzeit: " + (System.nanoTime() - startTime)/(long)1000/(long)1000/(long)1000 + " Sekunden");
+                Platform.runLater(() -> Main.visualizationController.autorun.setText(Main.NEWRUN));
+                Main.visualizationController.T_auto_run = false;
                 return;
             }
+            Main.visualizationController.translateResults();
             input = currentResults;
             currentResults = new ArrayList<>();
             Main.visualizationController.updateChart(true, input);
@@ -105,5 +130,7 @@ public class StepController {
     public int getCountSortCurrPosition(){
         return countSortCurrPosition;
     }
+
+    public ArrayList<SortingEntry> getInitList(){return initList;}
 }
 

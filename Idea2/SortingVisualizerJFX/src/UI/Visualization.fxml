@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
@@ -8,52 +9,84 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="vbox_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.VisualizationController">
+<VBox fx:id="vbox_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.VisualizationController">
    <children>
-      <BarChart fx:id="input" prefHeight="130.0" prefWidth="580.0" VBox.vgrow="ALWAYS">
+      <BarChart fx:id="input" prefHeight="142.0" prefWidth="817.0" VBox.vgrow="ALWAYS">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis label="Elemente" side="BOTTOM">
+               <tickLabelFont>
+                  <Font size="10.0" />
+               </tickLabelFont></CategoryAxis>
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis label="Elementwerte" side="LEFT">
+               <tickLabelFont>
+                  <Font size="10.0" />
+               </tickLabelFont></NumberAxis>
         </yAxis>
       </BarChart>
-      <BarChart fx:id="result" prefHeight="114.0" prefWidth="580.0" VBox.vgrow="ALWAYS">
+      <BarChart fx:id="result" prefHeight="125.0" prefWidth="817.0" VBox.vgrow="ALWAYS">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis label="Elemente" side="BOTTOM">
+               <tickLabelFont>
+                  <Font size="10.0" />
+               </tickLabelFont></CategoryAxis>
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis label="Elementwerte" side="LEFT">
+               <tickLabelFont>
+                  <Font size="10.0" />
+               </tickLabelFont></NumberAxis>
         </yAxis>
       </BarChart>
-      <HBox fx:id="hbox_lower" prefHeight="135.0" prefWidth="739.0">
+      <HBox fx:id="hbox_lower" prefHeight="172.0" prefWidth="817.0">
          <children>
-            <VBox fx:id="vbox_expl" prefHeight="100.0" prefWidth="397.0" HBox.hgrow="ALWAYS">
+            <VBox fx:id="vbox_expl" prefHeight="172.0" prefWidth="321.0" HBox.hgrow="ALWAYS">
                <children>
                   <Label text="Erklärung:" />
-                  <TextArea fx:id="explanation" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <TextArea fx:id="explanation" prefHeight="78.0" prefWidth="211.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="20.0" right="10.0" top="10.0" />
                      </VBox.margin></TextArea>
                </children>
             </VBox>
-            <VBox fx:id="vbox_next" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="vbox_next" prefHeight="135.0" prefWidth="145.0">
                <children>
-                  <Button fx:id="nextStep" mnemonicParsing="false" onMouseClicked="#nextStepClicked" prefHeight="114.0" prefWidth="68.0" text="Next Step" VBox.vgrow="ALWAYS">
+                  <Button fx:id="nextStep" mnemonicParsing="false" onMouseClicked="#nextStepClicked" prefHeight="132.0" prefWidth="106.0" text="Next Step" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                   </Button>
                </children>
             </VBox>
-            <VBox fx:id="vbox_auto" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="vbox_auto" prefHeight="135.0" prefWidth="122.0">
                <children>
-                  <Button fx:id="autorun" mnemonicParsing="false" onMouseClicked="#autorunClicked" prefHeight="114.0" prefWidth="61.0" text="Autorun" VBox.vgrow="ALWAYS">
+                  <Button fx:id="autorun" mnemonicParsing="false" onMouseClicked="#autorunClicked" prefHeight="131.0" prefWidth="102.0" text="Autorun" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </VBox.margin>
                   </Button>
                </children>
+            </VBox>
+            <VBox prefHeight="172.0" prefWidth="51.0">
+               <children>
+                  <Label prefHeight="14.0" prefWidth="207.0" rotate="270.0" text="Delay" translateY="100.0">
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="135.0" prefWidth="27.0">
+               <children>
+                  <Slider fx:id="slider_speed" orientation="VERTICAL" prefHeight="132.0" prefWidth="41.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin></Slider>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
             <VBox fx:id="vbox_stats" prefHeight="100.0" prefWidth="143.0">
                <children>
@@ -82,6 +115,9 @@
                      </children>
                   </HBox>
                </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
             </VBox>
          </children>
       </HBox>

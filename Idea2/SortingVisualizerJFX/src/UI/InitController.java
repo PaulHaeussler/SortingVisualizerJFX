@@ -128,7 +128,7 @@ public class InitController implements Initializable {
     }
 
 
-    private void addItemsToTable(TableView table, SortingEntry entry){
+    public void addItemsToTable(TableView table, SortingEntry entry){
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         ObservableList<TableColumn<SortingEntry, ?>> columns = table.getColumns();
