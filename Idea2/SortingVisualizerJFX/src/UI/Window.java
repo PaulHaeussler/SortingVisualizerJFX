@@ -10,6 +10,12 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import main.Main;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class Window {
 
     public Stage InitStage;
@@ -40,13 +46,11 @@ public class Window {
             stage.setTitle("Algorithmeninformation");
             stage.setScene(new Scene(root));
             stage.show();
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public void initializeVisualization() {
         try {

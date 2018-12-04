@@ -18,8 +18,6 @@ public class StepController {
     private ArrayList<SortingEntry> initList;
     private RadixSteps radixSteps;
     private BubbleSteps bubbleSteps;
-    private QSSteps quickSteps;
-    private GnomeSteps gnomeSteps;
     private SortAlgos type;
     public int maxLength;
 
@@ -28,9 +26,7 @@ public class StepController {
 
     public enum SortAlgos{
         RadixLSD,
-        BubbleSort,
-        QuickSort,
-        GnomeSort
+        BubbleSort
     }
 
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
@@ -39,8 +35,6 @@ public class StepController {
         type = algoType;
         radixSteps = new RadixSteps();
         bubbleSteps = new BubbleSteps();
-        quickSteps = new QSSteps(0,input.size()-1);
-        gnomeSteps = new GnomeSteps();
         initList = list;
         maxLength = Functions.getMax(list);
         countSortCurrNumber = 0;
@@ -70,12 +64,6 @@ public class StepController {
                 break;
             case BubbleSort:
                 doNextBubbleStep();
-                break;
-            case QuickSort:
-                doNextQSStep();
-                break;
-            case GnomeSort:
-                doNextGnomeStep();
                 break;
         }
     }
@@ -138,21 +126,14 @@ public class StepController {
         }
     }
 
-    private void doNextQSStep(){
-
-
-    }
-
-
-    private void doNextGnomeStep(){
-
-
-    }
-
 
     private void setFinished(){
         isFinished = true;
         Platform.runLater(() -> Main.visualizationController.autorun.setText(Main.NEWRUN));
+        Platform.runLater(() -> Main.visualizationController.explanation.replaceText(0, Main.visualizationController.explanation.getLength()-1, "Sortierung abgeschlossen!"));
+        Platform.runLater(() -> Main.visualizationController.markNewElement(true, null, currentResults));
+        Platform.runLater(() -> Main.visualizationController.input.setTitle("Ergebnis"));
+        Platform.runLater(() -> Main.visualizationController.vbox_main.getChildren().remove(Main.visualizationController.result));
         Main.visualizationController.T_auto_run = false;
     }
 

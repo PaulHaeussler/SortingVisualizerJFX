@@ -44,12 +44,13 @@ public class VisualizationController implements Initializable {
     @FXML public Label Lb_currNumber;
     @FXML public Label Lb_currElement;
     @FXML public Label Lb_steps;
+    @FXML public Label Lb_id_currPos;
+    @FXML public Label Lb_id_currNumber;
+    @FXML public Label Lb_id_currElement;
+    @FXML public Label Lb_id_steps;
     @FXML public Slider slider_speed;
 
-    private CategoryAxis inputXaxis = new CategoryAxis();
-    private CategoryAxis resultXaxis = new CategoryAxis();
-    private NumberAxis inputYaxis = new NumberAxis();
-    private NumberAxis resultYaxis = new NumberAxis();
+
     private XYChart.Series inputSeries = new XYChart.Series();
     private XYChart.Series resultSeries = new XYChart.Series();
 
@@ -64,7 +65,12 @@ public class VisualizationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         vbox_main.setFillWidth(true);
         hbox_lower.setFillHeight(true);
-        if(Main.stepController.getType() != StepController.SortAlgos.RadixLSD) vbox_main.getChildren().remove(result);
+        if(Main.stepController.getType() != StepController.SortAlgos.RadixLSD){
+            vbox_main.getChildren().remove(result);
+            hbox_elem.getChildren().remove(Lb_id_currElement);
+            hbox_num.getChildren().remove(Lb_id_currNumber);
+            hbox_pos.getChildren().remove(Lb_id_currPos);
+        }
 
 
 
@@ -224,6 +230,10 @@ public class VisualizationController implements Initializable {
     public void speedUpdate(Double newVal){
         sleepTime = (int)Math.round(newVal);
         System.out.println(sleepTime);
+    }
+
+    public void chartClicked(){
+        Main.window.initializeHelp();
     }
 
     public void newRun(){

@@ -194,10 +194,6 @@ public class InitController implements Initializable {
             Main.pickedAlgo = StepController.SortAlgos.RadixLSD;
         } else if(Rb_Bubble.isSelected()) {
             Main.pickedAlgo = StepController.SortAlgos.BubbleSort;
-        } else if(Rb_QS.isSelected()){
-            Main.pickedAlgo = StepController.SortAlgos.QuickSort;
-        } else if(Rb_Gnome.isSelected()){
-            Main.pickedAlgo = StepController.SortAlgos.GnomeSort;
         } else {
             return;
         }
@@ -218,31 +214,12 @@ public class InitController implements Initializable {
     public void Rb_LSD_clicked() {
         Lb_error_algo.setVisible(false);
         Rb_Bubble.setSelected(false);
-        Rb_QS.setSelected(false);
-        Rb_Gnome.setSelected(false);
     }
 
     public void Rb_Bubble_clicked() {
         Lb_error_algo.setVisible(false);
         Rb_LSD.setSelected(false);
-        Rb_QS.setSelected(false);
-        Rb_Gnome.setSelected(false);
     }
-
-    public void Rb_QS_clicked() {
-        Lb_error_algo.setVisible(false);
-        Rb_LSD.setSelected(false);
-        Rb_Bubble.setSelected(false);
-        Rb_Gnome.setSelected(false);
-    }
-
-    public void Rb_Gnome_clicked() {
-        Lb_error_algo.setVisible(false);
-        Rb_LSD.setSelected(false);
-        Rb_Bubble.setSelected(false);
-        Rb_QS.setSelected(false);
-    }
-
 
     public void Tb_charInput_changed() {
 

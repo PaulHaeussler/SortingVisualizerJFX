@@ -4,15 +4,54 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelpController implements Initializable {
 
-    @FXML public TextArea text;
+    @FXML public TextArea Ta_RadixSort_LSD;
+    @FXML public TextArea Ta_BubbleSort;
+    @FXML public TextArea Ta_Author;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        text.setWrapText(true);
-        text.setText("BLABLABLABLABLABLABLABLALBALBABLAABLLABBLALBABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBLBALLBABABBLABLA \n custom absatz BALBABLABALALBBALABLLBAALBBLABLALB");
+
+        Ta_RadixSort_LSD.setWrapText(true);
+        Ta_RadixSort_LSD.appendText(readFile("RadixSort LSD.txt"));
+
+        Ta_BubbleSort.setWrapText(true);
+        Ta_BubbleSort.appendText(readFile("BubbleSort.txt"));
+
+        Ta_Author.setWrapText(true);
+        Ta_Author.appendText(readFile("Autor.txt"));
+
+    }
+
+
+    private String readFile(String filename){
+        String str = "";
+        StringBuffer buf = new StringBuffer();
+        try {
+            InputStream is = getClass().getResource("texts\\" + filename).openStream();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                if (is != null) {
+                    while ((str = reader.readLine()) != null) {
+                        buf.append(str + "\n");
+                    }
+                }
+            } finally {
+                try {
+                    is.close();
+                } catch (Throwable ignore) {
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return buf.toString();
     }
 }

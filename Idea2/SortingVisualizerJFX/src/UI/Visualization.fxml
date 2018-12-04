@@ -11,7 +11,7 @@
 
 <VBox fx:id="vbox_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.VisualizationController">
    <children>
-      <BarChart fx:id="input" prefHeight="142.0" prefWidth="817.0" VBox.vgrow="ALWAYS">
+      <BarChart fx:id="input" prefHeight="142.0" prefWidth="817.0" onMouseClicked="#chartClicked" VBox.vgrow="ALWAYS">
         <xAxis>
           <CategoryAxis label="Elemente" side="BOTTOM">
                <tickLabelFont>
@@ -25,7 +25,7 @@
                </tickLabelFont></NumberAxis>
         </yAxis>
       </BarChart>
-      <BarChart fx:id="result" prefHeight="125.0" prefWidth="817.0" VBox.vgrow="ALWAYS">
+      <BarChart fx:id="result" prefHeight="125.0" prefWidth="817.0" onMouseClicked="#chartClicked" VBox.vgrow="ALWAYS">
         <xAxis>
           <CategoryAxis label="Elemente" side="BOTTOM">
                <tickLabelFont>
@@ -92,25 +92,25 @@
                <children>
                   <HBox fx:id="hbox_pos" prefHeight="36.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label text="Current Position: " />
+                        <Label fx:id="Lb_id_currPos" text="Current Position: " />
                         <Label fx:id="Lb_currPos" />
                      </children>
                   </HBox>
                   <HBox fx:id="hbox_num" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label text="Current Number: " />
+                        <Label fx:id="Lb_id_currNumber" text="Current Number: " />
                         <Label fx:id="Lb_currNumber" />
                      </children>
                   </HBox>
                   <HBox fx:id="hbox_elem" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label text="Current Element: " />
+                        <Label fx:id="Lb_id_currElement" text="Current Element: " />
                         <Label fx:id="Lb_currElement" />
                      </children>
                   </HBox>
                   <HBox fx:id="hbox_step" prefHeight="32.0" prefWidth="143.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label text="Step Count: " />
+                        <Label fx:id="Lb_id_steps" text="Step Count: " />
                         <Label fx:id="Lb_steps" />
                      </children>
                   </HBox>
