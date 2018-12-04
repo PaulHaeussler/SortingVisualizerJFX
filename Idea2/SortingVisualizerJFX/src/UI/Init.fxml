@@ -13,7 +13,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<ScrollPane fx:id="scrollPane" prefHeight="1079.0" prefWidth="1061.0" stylesheets="@InitStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.InitController">
+<ScrollPane fx:id="scrollPane" prefHeight="1100.0" prefWidth="1061.0" stylesheets="@InitStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.InitController">
    <content>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1064.0" prefWidth="1048.0">
          <children>
@@ -51,13 +51,15 @@
                         <TableColumn fx:id="Table_val" minWidth="0.0" prefWidth="461.0" styleClass="table_column" text="Wert" />
                      </columns>
                   </TableView>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7ec1ff" height="98.0" layoutX="16.0" layoutY="733.0" stroke="WHITE" strokeType="INSIDE" width="959.0" />
-                  <Label layoutX="30.0" layoutY="773.0" text="Sortieralgorithmus:" />
-                  <RadioButton fx:id="Rb_LSD" layoutX="217.0" layoutY="773.0" mnemonicParsing="false" onMouseClicked="#Rb_LSD_clicked" text="RadixSort (Least Significant Digit)" />
-                  <RadioButton fx:id="Rb_MSD" disable="true" layoutX="563.0" layoutY="773.0" mnemonicParsing="false" onMouseClicked="#Rb_MSD_clicked" text="RadixSort (Most Significant Digit)" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7ec1ff" height="125.0" layoutX="16.0" layoutY="733.0" stroke="WHITE" strokeType="INSIDE" width="959.0" />
+                  <Label layoutX="36.0" layoutY="748.0" text="Sortieralgorithmus:" />
+                  <RadioButton fx:id="Rb_LSD" layoutX="217.0" layoutY="765.0" mnemonicParsing="false" onMouseClicked="#Rb_LSD_clicked" text="RadixSort (Least Significant Digit)" />
+                  <RadioButton fx:id="Rb_Bubble" layoutX="560.0" layoutY="765.0" mnemonicParsing="false" onMouseClicked="#Rb_Bubble_clicked" text="BubbleSort" />
+                  <RadioButton fx:id="Rb_QS" layoutX="218.0" layoutY="814.0" mnemonicParsing="false" onMouseClicked="#Rb_QS_clicked" text="QuickSort" />
+                  <RadioButton fx:id="Rb_Gnome" layoutX="560.0" layoutY="814.0" mnemonicParsing="false" onMouseClicked="#Rb_Gnome_clicked" text="Shellsort" />
                   <Button fx:id="Bt_info" layoutX="883.0" layoutY="767.0" mnemonicParsing="false" onMouseClicked="#Bt_info_clicked" prefHeight="39.0" prefWidth="56.0" text="Info" />
-                  <Button fx:id="Bt_start" layoutX="14.0" layoutY="856.0" mnemonicParsing="false" onMouseClicked="#Bt_start_clicked" prefHeight="45.0" prefWidth="959.0" text="Start" />
-                  <Label fx:id="Lb_error_algo" layoutX="358.0" layoutY="805.0" prefHeight="17.0" prefWidth="372.0" text="Bitte einen Sortieralgorithmus auswählen!" textFill="#e10000" visible="false">
+                  <Button fx:id="Bt_start" layoutX="14.0" layoutY="879.0" mnemonicParsing="false" onMouseClicked="#Bt_start_clicked" prefHeight="45.0" prefWidth="959.0" text="Start" />
+                  <Label fx:id="Lb_error_algo" layoutX="350.0" layoutY="841.0" prefHeight="17.0" prefWidth="372.0" text="Bitte einen Sortieralgorithmus auswählen!" textFill="#e10000" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -87,7 +89,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Lb_error_no_entries" layoutX="355.0" layoutY="915.0" prefHeight="17.0" prefWidth="333.0" text="Nicht genügend Einträge vorhanden, um sie zu sortieren!" textFill="#d00000" visible="false">
+                  <Label fx:id="Lb_error_no_entries" layoutX="327.0" layoutY="933.0" prefHeight="17.0" prefWidth="333.0" text="Nicht genügend Einträge vorhanden, um sie zu sortieren!" textFill="#d00000" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

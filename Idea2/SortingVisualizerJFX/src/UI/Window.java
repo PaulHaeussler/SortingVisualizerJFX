@@ -1,10 +1,13 @@
 package UI;
 
 import Calculations.StepController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import main.Main;
 
 public class Window {
@@ -48,14 +51,21 @@ public class Window {
     public void initializeVisualization() {
         try {
             InitStage.hide();
+            Main.stepController = new StepController(Main.pickedAlgo, Main.input);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Visualization.fxml"));
             Parent root = loader.load();
             Main.visualizationController = loader.getController();
-            Main.stepController = new StepController(Main.pickedAlgo, Main.input);
             Main.visualizationRoot = root;
             VisualizationStage = new Stage();
             VisualizationStage.setTitle("Sorting Visualizer");
             VisualizationStage.setScene(new Scene(root));
+
+            VisualizationStage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+
+
             VisualizationStage.show();
 
 

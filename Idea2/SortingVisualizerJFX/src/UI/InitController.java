@@ -33,7 +33,9 @@ public class InitController implements Initializable {
     @FXML public Button Bt_remove;
 
     @FXML public RadioButton Rb_LSD;
-    @FXML public RadioButton Rb_MSD;
+    @FXML public RadioButton Rb_Bubble;
+    @FXML public RadioButton Rb_QS;
+    @FXML public RadioButton Rb_Gnome;
 
     @FXML public TextField Tb_charInput;
     @FXML public TextField Tb_position;
@@ -63,6 +65,23 @@ public class InitController implements Initializable {
                 = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
 
 
+        Table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        ObservableList<TableColumn<SortingEntry, ?>> columns = Table.getColumns();
+
+        for(TableColumn col:columns){
+            String field = "";
+            switch (col.getText()) {
+                case "Position":
+                    field = "Index";
+                    break;
+                case "Wert":
+                    field = "Value";
+                    break;
+            }
+
+            col.setCellValueFactory(new PropertyValueFactory<>(field));
+        }
 
         Cb_StrLength.setItems(list);
         Cb_StrLength.getSelectionModel().select(0);
@@ -99,7 +118,7 @@ public class InitController implements Initializable {
         }
         if(Tb_position.getText().trim().equals("")) {
             if(Table.getItems().isEmpty()) {
-                addItemsToTable(Table, new SortingEntry(0, Tb_charInput.getText()));
+                addItemsToTable(new SortingEntry(0, Tb_charInput.getText()));
                 return;
             }
             addToMaxPosPlusOne(Tb_charInput.getText());
@@ -111,7 +130,7 @@ public class InitController implements Initializable {
                     return;
                 }
             }
-            addItemsToTable(Table, new SortingEntry(Integer.parseInt(Tb_position.getText()), Tb_charInput.getText()));
+            addItemsToTable(new SortingEntry(Integer.parseInt(Tb_position.getText()), Tb_charInput.getText()));
         }
 
     }
@@ -124,29 +143,13 @@ public class InitController implements Initializable {
                 max = entry.getIndex();
             }
         }
-        addItemsToTable(Table, new SortingEntry(max+1, input));
+        addItemsToTable(new SortingEntry(max+1, input));
     }
 
 
-    public void addItemsToTable(TableView table, SortingEntry entry){
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    public void addItemsToTable(SortingEntry entry){
 
-        ObservableList<TableColumn<SortingEntry, ?>> columns = table.getColumns();
-
-        for(TableColumn col:columns){
-            String field = "";
-            switch (col.getText()) {
-                case "Position":
-                    field = "Index";
-                    break;
-                case "Wert":
-                    field = "Value";
-                    break;
-            }
-
-            col.setCellValueFactory(new PropertyValueFactory<>(field));
-        }
-        table.getItems().add(entry);
+        Table.getItems().add(entry);
     }
 
     public void Bt_generate_clicked() {
@@ -174,7 +177,7 @@ public class InitController implements Initializable {
 
 
     public void Bt_start_clicked() {
-        if(!(Rb_MSD.isSelected() || Rb_LSD.isSelected())){
+        if(!(Rb_Bubble.isSelected() || Rb_LSD.isSelected())){
             Lb_error_algo.setVisible(true);
             return;
         } else if(Table.getItems().size() < 2){
@@ -189,8 +192,14 @@ public class InitController implements Initializable {
         Main.input = input;
         if(Rb_LSD.isSelected()){
             Main.pickedAlgo = StepController.SortAlgos.RadixLSD;
+        } else if(Rb_Bubble.isSelected()) {
+            Main.pickedAlgo = StepController.SortAlgos.BubbleSort;
+        } else if(Rb_QS.isSelected()){
+            Main.pickedAlgo = StepController.SortAlgos.QuickSort;
+        } else if(Rb_Gnome.isSelected()){
+            Main.pickedAlgo = StepController.SortAlgos.GnomeSort;
         } else {
-            Main.pickedAlgo = StepController.SortAlgos.RadixMSD;
+            return;
         }
         Main.runVisualization();
     }
@@ -208,12 +217,30 @@ public class InitController implements Initializable {
 
     public void Rb_LSD_clicked() {
         Lb_error_algo.setVisible(false);
-        Rb_MSD.setSelected(false);
+        Rb_Bubble.setSelected(false);
+        Rb_QS.setSelected(false);
+        Rb_Gnome.setSelected(false);
     }
 
-    public void Rb_MSD_clicked() {
+    public void Rb_Bubble_clicked() {
         Lb_error_algo.setVisible(false);
         Rb_LSD.setSelected(false);
+        Rb_QS.setSelected(false);
+        Rb_Gnome.setSelected(false);
+    }
+
+    public void Rb_QS_clicked() {
+        Lb_error_algo.setVisible(false);
+        Rb_LSD.setSelected(false);
+        Rb_Bubble.setSelected(false);
+        Rb_Gnome.setSelected(false);
+    }
+
+    public void Rb_Gnome_clicked() {
+        Lb_error_algo.setVisible(false);
+        Rb_LSD.setSelected(false);
+        Rb_Bubble.setSelected(false);
+        Rb_QS.setSelected(false);
     }
 
 

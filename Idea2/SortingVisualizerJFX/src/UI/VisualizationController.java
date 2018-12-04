@@ -56,22 +56,22 @@ public class VisualizationController implements Initializable {
 
     public boolean T_auto_run = true;
 
-    private int sleepTime = 50; //millis
+    private int sleepTime = 5; //millis
     private Thread T_autorun = null;
 
 
     @Override
-    public void initialize(URL location, ResourceBundle ressources){
+    public void initialize(URL location, ResourceBundle resources){
         vbox_main.setFillWidth(true);
         hbox_lower.setFillHeight(true);
-        //vbox_main.getChildren().remove(input);
+        if(Main.stepController.getType() != StepController.SortAlgos.RadixLSD) vbox_main.getChildren().remove(result);
 
 
 
 
-        slider_speed.setMin(50);
+        slider_speed.setMin(5);
         slider_speed.setMax(1000);
-        slider_speed.setValue(50);
+        slider_speed.setValue(5);
         slider_speed.setShowTickLabels(true);
         slider_speed.setShowTickMarks(true);
         slider_speed.valueProperty().addListener((observable, oldValue, newValue) -> speedUpdate((double)newValue));
@@ -84,9 +84,8 @@ public class VisualizationController implements Initializable {
         result.setAnimated(false);
         updateChart(true, Main.input);
         updateChart(false, Functions.fillListwithEmpties(new ArrayList<>(), Main.input.size()));
-        for(Node n:input.lookupAll(".default-color0.chart-bar")){
-            n.setStyle("-fx-bar-fill: Red;");
-        }
+        markNewElement(true, null, Main.stepController.getInput());
+
     }
 
     public void updateStatus(){
@@ -106,7 +105,7 @@ public class VisualizationController implements Initializable {
         });
     }
 
-    public void markNewElement(boolean originalChart, SortingEntry element, ArrayList<SortingEntry> inputArr){
+    public void markNewElement(boolean originalChart, ArrayList<SortingEntry> elements, ArrayList<SortingEntry> inputArr){
         Platform.runLater(() -> {
             BarChart bc;
             ArrayList<SortingEntry> arr = inputArr;
@@ -116,21 +115,29 @@ public class VisualizationController implements Initializable {
                 bc = result;
             }
 
-            int c = 0;
+            if(elements == null){
+                for(Node n : bc.lookupAll(".default-color0.chart-bar")){
+                    n.setStyle("-fx-bar-fill: Red;");
+                }
+                return;
+            }
+
+            ArrayList<Integer> c = new ArrayList<>();
             for (int i = 0; i < arr.size(); i++) {
-                if (arr.get(i).equals(element)) {
-                    c = i;
-                    break;
+                for(int j = 0; j < elements.size(); j++) {
+                    if(arr.get(i).equals(elements.get(j))){
+                        c.add(i);
+                    }
                 }
             }
 
             int i = 0;
             for (Node n : bc.lookupAll(".default-color0.chart-bar")) {
-
-                if (c == i) {
-                    n.setStyle("-fx-bar-fill: Maroon;");
-                } else {
-                    n.setStyle("-fx-bar-fill: Red;");
+                n.setStyle("-fx-bar-fill: Red;");
+                for(Integer cTemp:c){
+                    if (cTemp == i) {
+                        n.setStyle("-fx-bar-fill: Maroon;");
+                    }
                 }
                 i++;
             }
@@ -244,13 +251,14 @@ public class VisualizationController implements Initializable {
     }
 
     public void translateResults(){
+        if(true) return; //decomissioned
         double i = 0;
         result.setOpacity(0.5);
         double steps = 0;
         if(T_auto_run){
             steps = 10;
         } else {
-            steps = 3;
+            steps = 1;
         }
         while(((vbox_main.getHeight()-hbox_lower.getHeight())/-2)+20 < i){
             result.setTranslateY(i);

@@ -11,10 +11,15 @@ public class StepController {
     private boolean isFinished;
     private int countSortCurrElement;
     private int countSortCurrPosition;
+    private int bubbleI;
+    private int bubbleN;
     private ArrayList<SortingEntry> currentResults;
     private ArrayList<SortingEntry> input;
     private ArrayList<SortingEntry> initList;
     private RadixSteps radixSteps;
+    private BubbleSteps bubbleSteps;
+    private QSSteps quickSteps;
+    private GnomeSteps gnomeSteps;
     private SortAlgos type;
     public int maxLength;
 
@@ -23,20 +28,32 @@ public class StepController {
 
     public enum SortAlgos{
         RadixLSD,
-        RadixMSD
+        BubbleSort,
+        QuickSort,
+        GnomeSort
     }
 
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
-
+        initList = list;
+        input = list;
         type = algoType;
-        radixSteps = new RadixSteps(type);
+        radixSteps = new RadixSteps();
+        bubbleSteps = new BubbleSteps();
+        quickSteps = new QSSteps(0,input.size()-1);
+        gnomeSteps = new GnomeSteps();
         initList = list;
         maxLength = Functions.getMax(list);
         countSortCurrNumber = 0;
         countSortCurrElement = 0;
-        initList = list;
-        input = list;
-        currentResults = new ArrayList<>();
+        bubbleI = 0;
+        bubbleN = list.size();
+
+        if(type == SortAlgos.BubbleSort){
+            currentResults = input;
+        } else {
+            currentResults = new ArrayList<>();
+        }
+
         if(type == SortAlgos.RadixLSD){
             countSortCurrPosition = 0;
         } else {
@@ -51,6 +68,15 @@ public class StepController {
             case RadixLSD:
                 doNextRadixStep();
                 break;
+            case BubbleSort:
+                doNextBubbleStep();
+                break;
+            case QuickSort:
+                doNextQSStep();
+                break;
+            case GnomeSort:
+                doNextGnomeStep();
+                break;
         }
     }
 
@@ -60,7 +86,7 @@ public class StepController {
      * Step control overhead if RadixSort was picked. Contains the possibility of implementing RadixSortMSD.
      */
 
-    public void doNextRadixStep(){
+    private void doNextRadixStep(){
         if(startTime == 0){
             startTime = System.nanoTime();
         }
@@ -80,16 +106,13 @@ public class StepController {
             } else {
                 countSortCurrPosition--;
             }
-            if(countSortCurrPosition < 0 || countSortCurrPosition > maxLength){
-                isFinished = true;
-                System.out.println("Laufzeit: " + (System.nanoTime() - startTime)/(long)1000/(long)1000/(long)1000 + " Sekunden");
-                Platform.runLater(() -> Main.visualizationController.autorun.setText(Main.NEWRUN));
-                Main.visualizationController.T_auto_run = false;
-                return;
+            if(countSortCurrPosition < 0 || countSortCurrPosition > maxLength || checkIfFinished(currentResults)) {
+                setFinished();
             }
             Main.visualizationController.translateResults();
             input = currentResults;
             currentResults = new ArrayList<>();
+            Main.visualizationController.updateChart(false, Functions.fillListwithEmpties(currentResults, input.size()));
             Main.visualizationController.updateChart(true, input);
             countSortCurrNumber = 0;
             countSortCurrElement = 0;
@@ -100,6 +123,50 @@ public class StepController {
             countSortCurrElement = 0;
             increaseCurrNumber();
         }
+    }
+
+
+    private void doNextBubbleStep(){
+        if(bubbleSteps.checkIfBSIsFinished(input)) setFinished();
+        if(bubbleN <= 1) setFinished();
+        if(isFinished) return;
+        currentResults = bubbleSteps.performBubbleSortStep(currentResults, bubbleI);
+        bubbleI++;
+        if(bubbleI >= bubbleN-1){
+            bubbleI = 0;
+            bubbleN--;
+        }
+    }
+
+    private void doNextQSStep(){
+
+
+    }
+
+
+    private void doNextGnomeStep(){
+
+
+    }
+
+
+    private void setFinished(){
+        isFinished = true;
+        Platform.runLater(() -> Main.visualizationController.autorun.setText(Main.NEWRUN));
+        Main.visualizationController.T_auto_run = false;
+    }
+
+    private boolean checkIfFinished(ArrayList<SortingEntry> results){
+        boolean finished = true;
+        for(int i = 0; i < results.size(); i++){
+            if(i != results.size()-1){
+                if(results.get(i).getValAsLong() > results.get(i+1).getValAsLong()){
+                    finished = false;
+                    break;
+                }
+            }
+        }
+        return finished;
     }
 
     private void increaseCurrNumber(){
@@ -132,5 +199,7 @@ public class StepController {
     }
 
     public ArrayList<SortingEntry> getInitList(){return initList;}
+
+    public SortAlgos getType(){return type;}
 }
 
