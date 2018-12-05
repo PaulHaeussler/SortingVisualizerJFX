@@ -1,10 +1,20 @@
 package Calculations;
 
+/**
+ * Class for object creation of entries
+ */
+
 public class SortingEntry {
 
     private Integer index;
     private String value;
     private Long valAsLong;
+
+    /**
+     * Creates a SortingEntry object with a position and a value, as well as the value as a long
+     * @param pos Index of the entry (for table for example)
+     * @param val String value
+     */
 
     public SortingEntry(Integer pos, String val){
         index = pos;
@@ -12,8 +22,13 @@ public class SortingEntry {
         valAsLong = stringToLong(val);
     }
 
+    /**
+     * Creates a long from the String characters
+     * @param str String which will be converted
+     * @return Long value of given String
+     */
 
-    private  Long stringToLong(String str) {
+    private Long stringToLong(String str) {
         String result = "";
         Long lng = (long)0;
         for(int i = 0; i < str.length(); i++){
@@ -34,7 +49,11 @@ public class SortingEntry {
         return value;
     }
 
-    public Long getValAsLong() {return valAsLong;}
+    public Long getValAsLong() {
+        return valAsLong;
+    }
 
-    public void setValue(String val){value = val;}
+    public void setValue(String val){
+        value = val;
+    }
 }

@@ -10,11 +10,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the help window containing information about the used algorithms and the author
+ * @author Paul Häussler
+ */
+
 public class HelpController implements Initializable {
 
     @FXML public TextArea Ta_RadixSort_LSD;
     @FXML public TextArea Ta_BubbleSort;
     @FXML public TextArea Ta_Author;
+
+    /**
+     * gets called on start of window. Calls the methods to read corresponding text files and inserts the into their
+     * text areas.
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,6 +40,11 @@ public class HelpController implements Initializable {
 
     }
 
+    /**
+     * Reads a file from a given internal link and returns the text content as a String
+     * @param filename relative source path
+     * @return content of the file as String
+     */
 
     private String readFile(String filename){
         String str = "";

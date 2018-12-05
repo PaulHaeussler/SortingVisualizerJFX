@@ -1,0 +1,5 @@
+Sorting Visualizer v1.0
+
+Autor: Paul Haeussler
+
+27.11.2018

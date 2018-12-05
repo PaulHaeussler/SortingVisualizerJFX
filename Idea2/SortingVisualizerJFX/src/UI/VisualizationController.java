@@ -3,18 +3,11 @@ package UI;
 import Calculations.Functions;
 import Calculations.SortingEntry;
 import Calculations.StepController;
-import Calculations.RadixSteps;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -24,6 +17,12 @@ import main.Main;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+/**
+ * Controller for the Visualization window, containing two BarCharts, explanation text box, butttons, sliders and
+ * Information about the run.
+ * @author Paul Häussler
+ */
 
 public class VisualizationController implements Initializable {
 
@@ -60,6 +59,11 @@ public class VisualizationController implements Initializable {
     private int sleepTime = 5; //millis
     private Thread T_autorun = null;
 
+    /**
+     * Gets called when the window gets created. Removes one BarChart and some information labels if the picked
+     * algorithm is not RadixSort. Sets bounds and current values of the slider as well as its changeListener.
+     * Configures the Charts.
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
@@ -71,8 +75,6 @@ public class VisualizationController implements Initializable {
             hbox_num.getChildren().remove(Lb_id_currNumber);
             hbox_pos.getChildren().remove(Lb_id_currPos);
         }
-
-
 
 
         slider_speed.setMin(5);
@@ -94,6 +96,10 @@ public class VisualizationController implements Initializable {
 
     }
 
+    /**
+     * Updates the Labels displaying several parameters of RadixSort
+     */
+
     public void updateStatus(){
         Platform.runLater(() -> {
             Lb_currElement.setText(Main.stepController.getCurrElement()+"");
@@ -103,6 +109,10 @@ public class VisualizationController implements Initializable {
         });
     }
 
+    /**
+     * Updates the explanation text box
+     * @param str String text to update it with
+     */
 
     public void setNewExplanation(String str){
         Platform.runLater(() -> {
@@ -111,7 +121,16 @@ public class VisualizationController implements Initializable {
         });
     }
 
-    public void markNewElement(boolean originalChart, ArrayList<SortingEntry> elements, ArrayList<SortingEntry> inputArr){
+    /**
+     * Colors the given  objects darker than the rest. Colors everything red if there is null given for the specific
+     * objects.
+     * @param originalChart whether or not to color the orignal chart or the result chart
+     * @param elements elements to color darker than the rest
+     * @param inputArr all elements currently in the barchart
+     */
+
+    public void markNewElement(boolean originalChart, ArrayList<SortingEntry> elements,
+                               ArrayList<SortingEntry> inputArr){
         Platform.runLater(() -> {
             BarChart bc;
             ArrayList<SortingEntry> arr = inputArr;
@@ -150,12 +169,19 @@ public class VisualizationController implements Initializable {
         });
     }
 
+    /**
+     * Updates one of both charts with new given entries
+     * @param originalChart boolean  to determine which chart gets updated
+     * @param entries new values for the chart
+     */
+
     public void updateChart(boolean originalChart, ArrayList<SortingEntry> entries){
         Platform.runLater(() -> {
             ArrayList<SortingEntry> list = Functions.checkForDoubles(entries);
             if(originalChart){
                 inputSeries = new XYChart.Series();
                 for(SortingEntry entry:list){
+                    assert(true);
                     XYChart.Data chartData = new XYChart.Data(entry.getValue(), entry.getValAsLong());
                     inputSeries.getData().add(chartData);
                 }
@@ -176,19 +202,23 @@ public class VisualizationController implements Initializable {
         });
     }
 
+    /**
+     * Gets triggered when nextStep was clicked. Calls  the stepcontroller and instructs it to move the current
+     * algorithm one step further.
+     */
 
     public void nextStepClicked(){
-        if(Main.stepController.isItFinished() && T_autorun != null){
-            try{
-                T_autorun.join();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        if(Main.stepController.isItFinished()){
+            return;
         } else {
             Platform.runLater(() -> Main.stepController.doNextStep());
         }
     }
 
+    /**
+     * Gets triggered when autorun is clicked. Starts a thread which automatically calls nextStep() with a given delay
+     * in between the calls.
+     */
 
     public void autorunClicked(){
 
@@ -227,14 +257,27 @@ public class VisualizationController implements Initializable {
 
     }
 
+    /**
+     * Updates the time the autothread sleeps.
+     * @param newVal new sleep delay as double in milliseconds
+     */
+
     public void speedUpdate(Double newVal){
         sleepTime = (int)Math.round(newVal);
         System.out.println(sleepTime);
     }
 
+    /**
+     * Gets triggered when the user clicks on the chart. Displays a help window.
+     */
+
     public void chartClicked(){
         Main.window.initializeHelp();
     }
+
+    /**
+     * Initializes a new run of the program. Asks whether the initial random values are to be kept or discarded.
+     */
 
     public void newRun(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -259,6 +302,11 @@ public class VisualizationController implements Initializable {
             }
         });
     }
+
+    /**
+     * Method to visualize the shift of the values from the lower chart to the upper. Doesn't work properly and
+     * is not used currently.
+     */
 
     public void translateResults(){
         if(true) return; //decomissioned

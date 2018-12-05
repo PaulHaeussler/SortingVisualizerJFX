@@ -15,6 +15,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the initialization window which controls the data input and selection
+ * @author Paul Häussler
+ */
+
 public class InitController implements Initializable {
 
     @FXML public ScrollPane scrollPane;
@@ -34,8 +39,6 @@ public class InitController implements Initializable {
 
     @FXML public RadioButton Rb_LSD;
     @FXML public RadioButton Rb_Bubble;
-    @FXML public RadioButton Rb_QS;
-    @FXML public RadioButton Rb_Gnome;
 
     @FXML public TextField Tb_charInput;
     @FXML public TextField Tb_position;
@@ -56,12 +59,16 @@ public class InitController implements Initializable {
     @FXML public Label Lb_error_wrong_pos;
     @FXML public Label Lb_error_exceed;
 
+    /**
+     * Gets called on window start. Initializes the combobox as well as the table
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        ObservableList<Integer> list //
+        ObservableList<Integer> list
                 = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6);
 
 
@@ -87,9 +94,18 @@ public class InitController implements Initializable {
         Cb_StrLength.getSelectionModel().select(0);
     }
 
+    /**
+     * Gets triggered when the help button was clicked. Calls the method to display the help window
+     */
+
     public void Bt_info_clicked() {
         Main.window.initializeHelp();
     }
+
+    /**
+     * Gets triggered when the Add button for manual entries was clicked. Performs several checks on the input and then
+     * inserts it into the table.
+     */
 
     public void Bt_add_clicked() {
         if(Tb_charInput.getText().trim().equals("")){
@@ -98,7 +114,8 @@ public class InitController implements Initializable {
         } else if(Tb_charInput.getText().length() < 1 || Tb_charInput.getText().length() > 6){
             Lb_error_str_length.setVisible(true);
             return;
-        } else if(!(Tb_position.getText().equals("")) && (!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7)){
+        } else if(!(Tb_position.getText().equals("")) &&
+                (!(Tb_position.getText().matches("[0-9]+")) || Tb_position.getText().length() > 7)){
             Lb_error_wrong_pos.setVisible(true);
             return;
         } else if(Table.getItems().size()+1 > 200){
@@ -135,6 +152,11 @@ public class InitController implements Initializable {
 
     }
 
+    /**
+     * Puts a given String value behind the biggest index in the table
+     * @param input any String value
+     */
+
     private void addToMaxPosPlusOne(String input){
         int max = 0;
         for(Object o:Table.getItems()){
@@ -146,11 +168,20 @@ public class InitController implements Initializable {
         addItemsToTable(new SortingEntry(max+1, input));
     }
 
+    /**
+     * Adds a SortingEntry object to the table
+     * @param entry the added object
+     */
 
     public void addItemsToTable(SortingEntry entry){
 
         Table.getItems().add(entry);
     }
+
+    /**
+     * Gets triggered when the generate button was clicked. Performs checks on the input parameters and then
+     * generates random String entries with the given parameters
+     */
 
     public void Bt_generate_clicked() {
         if(!(Cb_digits.isSelected() || Cb_upper.isSelected() || Cb_lower.isSelected() || Cb_specChar.isSelected())){
@@ -159,22 +190,35 @@ public class InitController implements Initializable {
             Lb_error_count.setVisible(true);
         } else if(Tb_entryCount.getText().length() > 7) {
             Lb_error_count_out_of_bounds.setVisible(true);
-        } else if(!(Tb_entryCount.getText().matches("[0-9]+")) || Integer.valueOf(Tb_entryCount.getText()) < 1 || Integer.valueOf(Tb_entryCount.getText()) > 200){
+        } else if(!(Tb_entryCount.getText().matches("[0-9]+")) || Integer.valueOf(Tb_entryCount.getText()) < 1
+                || Integer.valueOf(Tb_entryCount.getText()) > 200){
             Lb_error_count_out_of_bounds.setVisible(true);
         } else if(Integer.valueOf(Tb_entryCount.getText()) + Table.getItems().size() > 200){
             Lb_error_exceed.setVisible(true);
         } else {
-            generateRandomEntries(Integer.valueOf(Tb_entryCount.getText()), Integer.valueOf(Cb_StrLength.getSelectionModel().getSelectedItem().toString()));
+            generateRandomEntries(Integer.valueOf(Tb_entryCount.getText()),
+                    Integer.valueOf(Cb_StrLength.getSelectionModel().getSelectedItem().toString()));
         }
     }
 
+    /**
+     * Generates random strings of a given length and count and adds them to the table after the last element
+     * @param entryCount number of strings to be generated
+     * @param strLength length of each individual string to be generated
+     */
+
     private void generateRandomEntries(int entryCount, int strLength){
-        RandomString rnd = new RandomString(Cb_upper.isSelected(), Cb_lower.isSelected(), Cb_digits.isSelected(), Cb_specChar.isSelected());
+        RandomString rnd = new RandomString(Cb_upper.isSelected(), Cb_lower.isSelected(),
+                Cb_digits.isSelected(), Cb_specChar.isSelected());
         for(int i = 0; i < entryCount; i++){
             addToMaxPosPlusOne(rnd.newString(strLength));
         }
     }
 
+    /**
+     * Gets triggered when the start button gets clicked. Performs checks on viable input as well as a picked algorithm
+     * an the calls the Visualization window.
+     */
 
     public void Bt_start_clicked() {
         if(!(Rb_Bubble.isSelected() || Rb_LSD.isSelected())){
@@ -200,6 +244,9 @@ public class InitController implements Initializable {
         Main.runVisualization();
     }
 
+    /**
+     * Gets called when the remove button was clicked. Removes the elements currently selected in the table.
+     */
 
     public void Bt_remove_clicked() {
         ObservableList list = Table.getSelectionModel().getSelectedItems();
@@ -211,6 +258,10 @@ public class InitController implements Initializable {
         Table.refresh();
     }
 
+    /**
+     * Radiobuttons, deselect the other if one was clicked.
+     */
+
     public void Rb_LSD_clicked() {
         Lb_error_algo.setVisible(false);
         Rb_Bubble.setSelected(false);
@@ -220,6 +271,10 @@ public class InitController implements Initializable {
         Lb_error_algo.setVisible(false);
         Rb_LSD.setSelected(false);
     }
+
+    /**
+     * Methods to reset the error labels when the corresponding part gets edited.
+     */
 
     public void Tb_charInput_changed() {
 

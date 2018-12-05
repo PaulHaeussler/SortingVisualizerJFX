@@ -5,6 +5,11 @@ import main.Main;
 
 import java.util.ArrayList;
 
+/**
+ * central controller for all sorting algorithms, contains all variables and results
+ * @author Paul Häussler
+ */
+
 public class StepController {
 
     private int countSortCurrNumber;
@@ -28,6 +33,12 @@ public class StepController {
         RadixLSD,
         BubbleSort
     }
+
+    /**
+     * constructor which initializes based on the given algorithm all necessary variables.
+     * @param algoType the picked sorting algorithm
+     * @param list the given input list which will be sorted
+     */
 
     public StepController(SortAlgos algoType, ArrayList<SortingEntry> list){
         initList = list;
@@ -53,11 +64,14 @@ public class StepController {
         } else {
             countSortCurrPosition = maxLength-1;
         }
-        //doNextRadixStep();
-
     }
 
+    /**
+     * method to pick the step method corresponding to the picked sorting algorithm
+     */
+
     public void doNextStep(){
+        totalSteps++;
         switch (type){
             case RadixLSD:
                 doNextRadixStep();
@@ -71,7 +85,9 @@ public class StepController {
 
 
     /**
-     * Step control overhead if RadixSort was picked. Contains the possibility of implementing RadixSortMSD.
+     * Step control overhead if RadixSort was picked.
+     * RadixSort runs Selection Sort by the integer of the value at a given position, in the case of LSD radix sort
+     * starting at the least significant digit.
      */
 
     private void doNextRadixStep(){
@@ -81,11 +97,12 @@ public class StepController {
 
         if(isFinished) return;
 
-        totalSteps++;
+
         Main.visualizationController.updateStatus();
 
 
-        currentResults = radixSteps.performCountSortStep(input, currentResults, countSortCurrNumber, countSortCurrElement, countSortCurrPosition);
+        currentResults = radixSteps.performCountSortStep(input, currentResults, countSortCurrNumber,
+                countSortCurrElement, countSortCurrPosition);
 
 
         if(radixSteps.checkIfCSIsFinished(input, currentResults)){
@@ -96,14 +113,19 @@ public class StepController {
             }
             if(countSortCurrPosition < 0 || countSortCurrPosition > maxLength || checkIfFinished(currentResults)) {
                 setFinished();
+
             }
             Main.visualizationController.translateResults();
             input = currentResults;
             currentResults = new ArrayList<>();
-            Main.visualizationController.updateChart(false, Functions.fillListwithEmpties(currentResults, input.size()));
+            Main.visualizationController.updateChart(false, Functions.fillListwithEmpties(currentResults,
+                    input.size()));
             Main.visualizationController.updateChart(true, input);
             countSortCurrNumber = 0;
             countSortCurrElement = 0;
+            if(!isFinished){
+            Main.visualizationController.setNewExplanation("Da Countingsort abegeschlossen ist, werden die Zwischen" +
+                    "ergebnisse als neuer Input benutzt.");}
             return;
         }
         countSortCurrElement++;
@@ -113,12 +135,16 @@ public class StepController {
         }
     }
 
+    /**
+     * Advances the bubbleSort algorithm by a step.
+     */
 
     private void doNextBubbleStep(){
         if(bubbleSteps.checkIfBSIsFinished(input)) setFinished();
         if(bubbleN <= 1) setFinished();
         if(isFinished) return;
         currentResults = bubbleSteps.performBubbleSortStep(currentResults, bubbleI);
+        Platform.runLater(() -> Main.visualizationController.Lb_steps.setText(StepController.totalSteps+""));
         bubbleI++;
         if(bubbleI >= bubbleN-1){
             bubbleI = 0;
@@ -126,16 +152,28 @@ public class StepController {
         }
     }
 
+    /**
+     * Method to set the flag as well as edit the UI when the algorithm is finished.
+     */
 
     private void setFinished(){
         isFinished = true;
         Platform.runLater(() -> Main.visualizationController.autorun.setText(Main.NEWRUN));
-        Platform.runLater(() -> Main.visualizationController.explanation.replaceText(0, Main.visualizationController.explanation.getLength()-1, "Sortierung abgeschlossen!"));
-        Platform.runLater(() -> Main.visualizationController.markNewElement(true, null, currentResults));
+        Platform.runLater(() -> Main.visualizationController.explanation.replaceText(0,
+                Main.visualizationController.explanation.getLength()-1, "Sortierung abgeschlossen!"));
+        Platform.runLater(() -> Main.visualizationController.markNewElement(true, null,
+                currentResults));
         Platform.runLater(() -> Main.visualizationController.input.setTitle("Ergebnis"));
-        Platform.runLater(() -> Main.visualizationController.vbox_main.getChildren().remove(Main.visualizationController.result));
+        Platform.runLater(() ->
+                Main.visualizationController.vbox_main.getChildren().remove(Main.visualizationController.result));
         Main.visualizationController.T_auto_run = false;
     }
+
+    /**
+     * Checks whether or not the given results are sorted.
+     * @param results ArrayList of SortingEntrys to be checked
+     * @return boolean, true if results is sorted
+     */
 
     private boolean checkIfFinished(ArrayList<SortingEntry> results){
         boolean finished = true;

@@ -1,11 +1,15 @@
 package Calculations;
 
-import java.util.ArrayList;
+
 import java.util.Locale;
 import java.util.Random;
 
-public class RandomString {
+/**
+ * Class containing methods for creating strings of random characters
+ * @author Paul Häussler
+ */
 
+public class RandomString {
 
     private static final String upper = "ABCDEFGHIJLMNOPQRSTUVWXYZÄÖÜ";
     private static final String lower = upper.toLowerCase(Locale.ROOT);
@@ -14,6 +18,13 @@ public class RandomString {
     private Random random;
     private char[] symbols;
 
+    /**
+     * Constructor, prepares String for random generation based on picked options
+     * @param useUpper utilize upper characters
+     * @param useLower utilize lower characters
+     * @param useDigits utilize digits
+     * @param useSpecChars utilize special characters
+     */
 
     public RandomString(boolean useUpper, boolean useLower, boolean useDigits, boolean useSpecChars){
         random = new Random();
@@ -25,26 +36,17 @@ public class RandomString {
         symbols = selected.toCharArray();
     }
 
+    /**
+     * creates a new String for the given length out of the String of possible characters
+     * @param length length of the random string
+     * @return String of random character
+     */
+
     public String newString(int length){
         char[] buffer = new char[length];
         for(int i = 0; i < length; i++){
             buffer[i] = symbols[random.nextInt(symbols.length)];
         }
         return new String(buffer);
-    }
-
-
-    public ArrayList<String> newStringList(int listlength, int stringlength){
-        ArrayList<String> list = new ArrayList<>();
-        for(int i = 0; i < listlength; i++){
-            if(stringlength == 4 && i == 5){
-                list.add("SooS");
-            }
-            else if(stringlength == 4 && i == 6){
-                list.add("MeeM");
-            }
-            list.add(this.newString(stringlength));
-        }
-        return list;
     }
 }

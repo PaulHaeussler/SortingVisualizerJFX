@@ -24,13 +24,15 @@ public class BubbleSteps {
         elementsToSort.add(list.get(i));
         elementsToSort.add(list.get(i+1));
         if(list.get(i).getValAsLong() > list.get(i+1).getValAsLong()){
-            Main.visualizationController.setNewExplanation("Da " + list.get(i).getValue() + " größer war als sein Nachfolger " + list.get(i+1).getValue() + ", wurden die beiden getauscht!");
+            Main.visualizationController.setNewExplanation("Da " + list.get(i).getValue() +
+                    " größer war als sein Nachfolger " + list.get(i+1).getValue() + ", wurden die beiden getauscht!");
             SortingEntry entry = list.get(i);
             list.remove(i);
             list.add(i+1, entry);
             Main.visualizationController.updateChart(true, list);
         } else {
-            Main.visualizationController.setNewExplanation("Da " + list.get(i).getValue() + "  nicht größer ist als sein Nachfolger " + list.get(i+1).getValue() + ", wird nichts verändert!");
+            Main.visualizationController.setNewExplanation("Da " + list.get(i).getValue() +
+                    "  nicht größer ist als sein Nachfolger " + list.get(i+1).getValue() + ", wird nichts verändert!");
         }
         Main.visualizationController.markNewElement(true, elementsToSort, list);
         return list;

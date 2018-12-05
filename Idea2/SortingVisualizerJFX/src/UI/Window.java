@@ -2,24 +2,25 @@ package UI;
 
 import Calculations.StepController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import main.Main;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
+/**
+ * Class for building all windows of this application.
+ * @author Paul Häussler
+ */
 
 public class Window {
 
     public Stage InitStage;
     public Stage VisualizationStage;
+
+    /**
+     * Creates the initial window from its fxml.
+     */
 
     public void initializeInit() {
         try {
@@ -29,14 +30,21 @@ public class Window {
             InitStage = new Stage();
             InitStage.setTitle("SortingVisualizer");
             InitStage.setScene(new Scene(root));
+
+            InitStage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+
             InitStage.show();
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Creates the help window from its fxml.
+     */
 
     public void initializeHelp() {
         try {
@@ -51,6 +59,10 @@ public class Window {
         }
     }
 
+    /**
+     * Creates the visualization window from its fxml, as well as the stepController for it, since it needs to be
+     * created beforehand. Sets a listener to terminate all running threads on close.
+     */
 
     public void initializeVisualization() {
         try {
